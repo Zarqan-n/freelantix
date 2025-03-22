@@ -1,13 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronRight } from 'lucide-react';
+import ThemeToggle from '@/components/ThemeToggle';
+import { useTheme } from '@/contexts/ThemeContext';
+import { useOnClickOutside } from '@/hooks/use-on-click-outside.ts';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [location] = useLocation();
+  const { theme } = useTheme();
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+
+  // Close mobile menu when clicking outside
+  useOnClickOutside(mobileMenuRef, () => setIsOpen(false));
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,12 +26,25 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Add scroll lock when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location]);
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
-  };
-
-  const closeMenu = () => {
-    setIsOpen(false);
   };
 
   const navItems = [
@@ -40,8 +61,9 @@ const Navbar = () => {
 
   return (
     <header className={cn(
-      "fixed w-full bg-white z-50 transition-all duration-300",
-      isScrolled ? "shadow-md py-2" : "shadow-sm py-4"
+      "fixed w-full z-50 transition-all duration-300",
+      "bg-background border-b border-border",
+      isScrolled ? "shadow-md py-2" : "py-4"
     )}>
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
@@ -58,56 +80,88 @@ const Navbar = () => {
                 key={item.path} 
                 href={item.path}
                 className={cn(
-                  "text-neutral-700 hover:text-primary font-medium",
+                  "nav-link text-foreground hover:text-primary font-medium transition-colors",
                   isActive(item.path) && "text-primary"
                 )}
               >
                 {item.label}
               </Link>
             ))}
+            <ThemeToggle />
             <Button asChild className="bg-primary hover:bg-primary/90">
               <Link href="/contact">Get Started</Link>
             </Button>
           </div>
           
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center">
+          <div className="md:hidden flex items-center space-x-2">
+            <ThemeToggle />
             <Button 
               variant="ghost" 
               onClick={toggleMenu} 
-              className="text-neutral-700 hover:text-primary"
+              className="text-foreground hover:text-primary"
               aria-label="Toggle Menu"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </Button>
           </div>
         </div>
-        
-        {/* Mobile Navigation */}
-        <div className={cn("md:hidden", isOpen ? "block" : "hidden")}>
-          <div className="px-2 pt-2 pb-4 space-y-1 sm:px-3">
-            {navItems.map((item) => (
-              <Link 
-                key={item.path} 
-                href={item.path}
-                onClick={closeMenu}
-                className={cn(
-                  "block py-2 px-3 text-neutral-700 hover:text-primary font-medium",
-                  isActive(item.path) && "text-primary"
-                )}
+      </nav>
+      
+      {/* Mobile Navigation Overlay */}
+      <div 
+        className={cn(
+          "fixed inset-0 bg-background/80 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300",
+          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        )}
+      >
+        {/* Mobile Menu Content */}
+        <div 
+          ref={mobileMenuRef}
+          className={cn(
+            "fixed top-[73px] right-0 bottom-0 w-3/4 max-w-sm bg-background border-l border-border shadow-xl z-50 overflow-y-auto transition-transform duration-300 ease-in-out",
+            isOpen ? "translate-x-0" : "translate-x-full"
+          )}
+        >
+          <div className="p-6 flex flex-col h-full">
+            <div className="space-y-6 flex-1">
+              {navItems.map((item) => (
+                <div 
+                  key={item.path}
+                  className="border-b border-border pb-3"
+                >
+                  <Link 
+                    href={item.path}
+                    className={cn(
+                      "group flex items-center justify-between py-2 text-lg font-medium transition-colors",
+                      isActive(item.path) ? "text-primary" : "text-foreground hover:text-primary"
+                    )}
+                  >
+                    <span>{item.label}</span>
+                    <ChevronRight 
+                      size={18} 
+                      className={cn(
+                        "transition-transform duration-300",
+                        "group-hover:translate-x-1 text-primary opacity-0 group-hover:opacity-100"
+                      )} 
+                    />
+                  </Link>
+                </div>
+              ))}
+            </div>
+            
+            <div className="mt-8">
+              <Button 
+                asChild 
+                className="w-full bg-primary hover:bg-primary/90"
+                size="lg"
               >
-                {item.label}
-              </Link>
-            ))}
-            <Button 
-              asChild 
-              className="w-full mt-4 bg-primary hover:bg-primary/90"
-            >
-              <Link href="/contact" onClick={closeMenu}>Get Started</Link>
-            </Button>
+                <Link href="/contact">Get Started</Link>
+              </Button>
+            </div>
           </div>
         </div>
-      </nav>
+      </div>
     </header>
   );
 };

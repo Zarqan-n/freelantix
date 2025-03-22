@@ -2,6 +2,9 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./index.css";
 import "locomotive-scroll/dist/locomotive-scroll.css";
+import { ThemeProvider } from "./contexts/ThemeContext";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "./lib/queryClient";
 
 // Additional global styles
 import { createGlobalStyle } from "styled-components";
@@ -25,8 +28,10 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 createRoot(document.getElementById("root")!).render(
-  <>
-    <GlobalStyles />
-    <App />
-  </>
+  <QueryClientProvider client={queryClient}>
+    <ThemeProvider>
+      <GlobalStyles />
+      <App />
+    </ThemeProvider>
+  </QueryClientProvider>
 );
