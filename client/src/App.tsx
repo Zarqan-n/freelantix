@@ -13,6 +13,7 @@ import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import Contact from "@/pages/Contact";
 import { SmoothScrollProvider } from "./contexts/SmoothScrollContext";
+import { ThemeProvider } from "./contexts/ThemeContext";
 import { useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -52,23 +53,25 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SmoothScrollProvider options={{ 
-        smooth: true, 
-        smoothMobile: false,
-        lerp: 0.1,
-        inertia: 0.1,
-        getDirection: true,
-      }}>
-        <div className="flex flex-col min-h-screen">
-          <Navbar />
-          <main className="flex-grow">
-            <Router />
-          </main>
-          <Footer />
-          <BackToTop />
-        </div>
-        <Toaster />
-      </SmoothScrollProvider>
+      <ThemeProvider>
+        <SmoothScrollProvider options={{ 
+          smooth: true, 
+          smoothMobile: false,
+          lerp: 0.1,
+          inertia: 0.1,
+          getDirection: true,
+        }}>
+          <div className="flex flex-col min-h-screen bg-background transition-colors duration-300">
+            <Navbar />
+            <main className="flex-grow">
+              <Router />
+            </main>
+            <Footer />
+            <BackToTop />
+          </div>
+          <Toaster />
+        </SmoothScrollProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

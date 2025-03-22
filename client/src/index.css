@@ -1,3 +1,6 @@
+/* Import the fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -52,8 +55,50 @@
     @apply border-border;
   }
 
+  html {
+    @apply scroll-smooth;
+  }
+
   body {
-    @apply font-sans antialiased bg-background text-foreground transition-colors duration-300;
+    @apply font-sans antialiased bg-background text-foreground min-h-screen;
+  }
+
+  /* Theme transition for all color changes */
+  body, button, a, div, section, header, footer, nav, main, aside,
+  h1, h2, h3, h4, h5, h6, p, span, input, textarea, select {
+    @apply transition-colors duration-300;
+  }
+  
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-bold text-foreground;
+  }
+
+  /* Link styling */
+  a:not(.unstyled) {
+    @apply text-primary hover:text-primary/80 transition-colors duration-300;
+  }
+
+  /* Custom scrollbar */
+  body::-webkit-scrollbar {
+    @apply w-2;
+  }
+  
+  body::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+  
+  body::-webkit-scrollbar-thumb {
+    @apply bg-primary/60 rounded-full hover:bg-primary/80;
+  }
+
+  /* Dark mode specific adjustments */
+  .dark img {
+    @apply brightness-90;
+  }
+  
+  .dark input, .dark textarea, .dark select {
+    @apply bg-card border-input;
   }
   
   /* Smooth scroll styles */
@@ -80,129 +125,91 @@
   }
 }
 
-/* GSAP animation classes */
-.gsap-reveal {
-  opacity: 0;
+@layer components {
+  /* GSAP animation classes */
+  .gsap-reveal {
+    @apply opacity-0;
+  }
+
+  .gsap-reveal-up {
+    @apply opacity-0 translate-y-8;
+  }
+
+  .gsap-reveal-left {
+    @apply opacity-0 -translate-x-8;
+  }
+
+  .gsap-reveal-right {
+    @apply opacity-0 translate-x-8;
+  }
+
+  /* Animation delay classes */
+  .animation-delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .animation-delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+
+  .animation-delay-500 {
+    animation-delay: 500ms;
+  }
+
+  /* Hover animation for cards and elements */
+  .hover-lift {
+    @apply transition-transform duration-300 ease-in-out;
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-2 shadow-lg;
+  }
+
+  /* Navbar hover animation */
+  .nav-link {
+    @apply relative;
+  }
+
+  .nav-link::after {
+    content: '';
+    @apply absolute w-0 h-0.5 -bottom-1 left-0 bg-primary transition-all duration-300 ease-in-out;
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    @apply w-full;
+  }
+
+  /* Theme toggle animation */
+  .theme-toggle-icon {
+    @apply transform transition-transform duration-300;
+  }
+
+  .theme-toggle-btn:hover .theme-toggle-icon {
+    @apply rotate-12;
+  }
 }
 
-.gsap-reveal-up {
-  opacity: 0;
-  transform: translateY(30px);
-}
+@layer utilities {
+  /* Testimonial swiper styles */
+  .swiper-pagination-bullet {
+    @apply bg-primary/50 opacity-50;
+  }
 
-.gsap-reveal-left {
-  opacity: 0;
-  transform: translateX(-30px);
-}
+  .swiper-pagination-bullet-active {
+    @apply bg-primary opacity-100;
+  }
 
-.gsap-reveal-right {
-  opacity: 0;
-  transform: translateX(30px);
-}
-
-/* Add animation delay classes */
-.animation-delay-100 {
-  animation-delay: 100ms;
-}
-
-.animation-delay-200 {
-  animation-delay: 200ms;
-}
-
-.animation-delay-300 {
-  animation-delay: 300ms;
-}
-
-.animation-delay-400 {
-  animation-delay: 400ms;
-}
-
-.animation-delay-500 {
-  animation-delay: 500ms;
-}
-
-/* Hover animation for cards and elements */
-.hover-lift {
-  transition: transform 0.3s ease-in-out;
-}
-
-.hover-lift:hover {
-  transform: translateY(-10px);
-}
-
-/* Page transitions */
-.page-transition-enter {
-  opacity: 0;
-}
-
-.page-transition-enter-active {
-  opacity: 1;
-  transition: opacity 400ms;
-}
-
-.page-transition-exit {
-  opacity: 1;
-}
-
-.page-transition-exit-active {
-  opacity: 0;
-  transition: opacity 300ms;
-}
-
-/* Navbar hover animation */
-.nav-link {
-  position: relative;
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -4px;
-  left: 0;
-  background-color: hsl(var(--primary));
-  transition: width 0.3s ease;
-}
-
-.nav-link:hover::after,
-.nav-link.active::after {
-  width: 100%;
-}
-
-/* Mobile navbar animation */
-.mobile-nav-enter {
-  opacity: 0;
-  transform: translateX(100%);
-}
-
-.mobile-nav-enter-active {
-  opacity: 1;
-  transform: translateX(0);
-  transition: opacity 300ms, transform 300ms;
-}
-
-.mobile-nav-exit {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.mobile-nav-exit-active {
-  opacity: 0;
-  transform: translateX(100%);
-  transition: opacity 300ms, transform 300ms;
-}
-
-/* Testimonial swiper styles */
-.swiper-pagination-bullet {
-  @apply bg-primary/50 opacity-50;
-}
-
-.swiper-pagination-bullet-active {
-  @apply bg-primary opacity-100;
-}
-
-.swiper-button-prev,
-.swiper-button-next {
-  @apply text-primary;
+  .swiper-button-prev,
+  .swiper-button-next {
+    @apply text-primary;
+  }
 }
