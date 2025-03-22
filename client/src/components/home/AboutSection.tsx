@@ -2,9 +2,15 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'wouter';
 import { useEffect, useRef, useState } from 'react';
 
-const NumberCounter = ({ end, duration = 2000, suffix = '' }) => {
+interface NumberCounterProps {
+  end: number;
+  duration?: number;
+  suffix?: string;
+}
+
+const NumberCounter = ({ end, duration = 2000, suffix = '' }: NumberCounterProps) => {
   const [count, setCount] = useState(0);
-  const countRef = useRef(null);
+  const countRef = useRef<HTMLSpanElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -30,13 +36,13 @@ const NumberCounter = ({ end, duration = 2000, suffix = '' }) => {
   useEffect(() => {
     if (!isVisible) return;
 
-    let startTime;
-    let animationFrameId;
+    let startTime: number | null = null;
+    let animationFrameId: number;
 
-    const animateCount = (timestamp) => {
+    const animateCount = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
       
-      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const progress = Math.min((timestamp - (startTime || 0)) / duration, 1);
       const currentCount = Math.floor(progress * end);
       
       setCount(currentCount);

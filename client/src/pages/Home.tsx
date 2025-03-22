@@ -5,6 +5,7 @@ import ServicesSection from '@/components/home/ServicesSection';
 import CTASection from '@/components/home/CTASection';
 import AboutSection from '@/components/home/AboutSection';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
+import PricingSection from '@/components/home/PricingSection';
 import { useQuery } from '@tanstack/react-query';
 import { BlogPost } from '@/lib/types';
 import { Link } from 'wouter';
@@ -28,6 +29,7 @@ const Home = () => {
       <CTASection />
       <AboutSection />
       <TestimonialsSection />
+      <PricingSection />
       
       {/* Blog Section */}
       <section id="blog" className="py-16 lg:py-24 bg-white">
