@@ -29,28 +29,6 @@
     --radius: 0.5rem;
   }
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
-  }
-
   * {
     @apply border-border;
   }
@@ -63,12 +41,6 @@
     @apply font-sans antialiased bg-background text-foreground min-h-screen;
   }
 
-  /* Theme transition for all color changes */
-  body, button, a, div, section, header, footer, nav, main, aside,
-  h1, h2, h3, h4, h5, h6, p, span, input, textarea, select {
-    @apply transition-colors duration-300;
-  }
-  
   /* Headings */
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading font-bold text-foreground;
@@ -79,49 +51,21 @@
     @apply text-primary hover:text-primary/80 transition-colors duration-300;
   }
 
+  button {
+    @apply text-primary-foreground;
+  }
+
   /* Custom scrollbar */
   body::-webkit-scrollbar {
     @apply w-2;
   }
-  
+
   body::-webkit-scrollbar-track {
     @apply bg-muted;
   }
-  
+
   body::-webkit-scrollbar-thumb {
     @apply bg-primary/60 rounded-full hover:bg-primary/80;
-  }
-
-  /* Dark mode specific adjustments */
-  .dark img {
-    @apply brightness-90;
-  }
-  
-  .dark input, .dark textarea, .dark select {
-    @apply bg-card border-input;
-  }
-  
-  /* Smooth scroll styles */
-  html.has-scroll-smooth {
-    overflow: hidden;
-  }
-  
-  html.has-scroll-dragging {
-    user-select: none;
-  }
-  
-  .has-scroll-smooth body {
-    overflow: hidden;
-  }
-  
-  .has-scroll-smooth [data-scroll-container] {
-    min-height: 100vh;
-  }
-  
-  .smooth-scroll-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
   }
 }
 
@@ -186,15 +130,6 @@
   .nav-link:hover::after,
   .nav-link.active::after {
     @apply w-full;
-  }
-
-  /* Theme toggle animation */
-  .theme-toggle-icon {
-    @apply transform transition-transform duration-300;
-  }
-
-  .theme-toggle-btn:hover .theme-toggle-icon {
-    @apply rotate-12;
   }
 }
 
