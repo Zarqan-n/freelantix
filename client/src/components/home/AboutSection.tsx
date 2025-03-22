@@ -1,5 +1,66 @@
 import { Button } from '@/components/ui/button';
 import { Link } from 'wouter';
+import { useEffect, useRef, useState } from 'react';
+
+const NumberCounter = ({ end, duration = 2000, suffix = '' }) => {
+  const [count, setCount] = useState(0);
+  const countRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      const [entry] = entries;
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0.5 });
+
+    if (countRef.current) {
+      observer.observe(countRef.current);
+    }
+
+    return () => {
+      if (countRef.current) {
+        observer.disconnect();
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    let startTime;
+    let animationFrameId;
+
+    const animateCount = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const currentCount = Math.floor(progress * end);
+      
+      setCount(currentCount);
+      
+      if (progress < 1) {
+        animationFrameId = requestAnimationFrame(animateCount);
+      } else {
+        setCount(end);
+      }
+    };
+    
+    animationFrameId = requestAnimationFrame(animateCount);
+    
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [end, duration, isVisible]);
+
+  return (
+    <span ref={countRef} className="font-heading font-bold text-3xl text-primary">
+      {count}{suffix}
+    </span>
+  );
+};
 
 const AboutSection = () => {
   return (
@@ -24,15 +85,21 @@ const AboutSection = () => {
             
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 mb-8">
               <div>
-                <h3 className="font-heading font-bold text-3xl text-primary mb-2">200+</h3>
+                <h3 className="font-heading font-bold text-3xl text-primary mb-2">
+                  <NumberCounter end={200} suffix="+" />
+                </h3>
                 <p className="text-neutral-600">Projects Completed</p>
               </div>
               <div>
-                <h3 className="font-heading font-bold text-3xl text-primary mb-2">50+</h3>
+                <h3 className="font-heading font-bold text-3xl text-primary mb-2">
+                  <NumberCounter end={50} suffix="+" />
+                </h3>
                 <p className="text-neutral-600">Happy Clients</p>
               </div>
               <div>
-                <h3 className="font-heading font-bold text-3xl text-primary mb-2">15+</h3>
+                <h3 className="font-heading font-bold text-3xl text-primary mb-2">
+                  <NumberCounter end={15} suffix="+" />
+                </h3>
                 <p className="text-neutral-600">Team Members</p>
               </div>
             </div>
