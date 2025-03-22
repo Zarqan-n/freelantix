@@ -1,29 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
+
+import React from 'react';
 import { Moon, Sun } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { useTheme } from '@/contexts/ThemeContext';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function ThemeToggle() {
   const { theme, toggleTheme, isDark } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  // Only show theme toggle after mounting to avoid hydration mismatch
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return <div className="w-9 h-9" />; // Placeholder to prevent layout shift
-  }
 
   return (
     <Button 
       variant="outline" 
       size="icon" 
       onClick={toggleTheme}
-      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+      aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
       className={cn(
         "rounded-full relative overflow-hidden",
         "bg-transparent border-primary/20 hover:bg-background hover:border-primary/40",
