@@ -5,7 +5,6 @@ import { cn } from '@/lib/utils';
 import { Menu, X, ChevronRight } from 'lucide-react';
 import ThemeToggle from '@/components/ThemeToggle';
 import { useTheme } from '@/contexts/ThemeContext';
-import { useOnClickOutside } from '@/hooks/use-on-click-outside.ts';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,9 +13,7 @@ const Navbar = () => {
   const { theme } = useTheme();
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
-  // Close mobile menu when clicking outside
-  useOnClickOutside(mobileMenuRef, () => setIsOpen(false));
-
+  // Handle scroll effects
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -25,6 +22,20 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  
+  // Handle clicks outside the mobile menu
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node) && isOpen) {
+        setIsOpen(false);
+      }
+    };
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
   // Add scroll lock when mobile menu is open
   useEffect(() => {
