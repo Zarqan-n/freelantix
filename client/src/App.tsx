@@ -12,6 +12,13 @@ import Services from "@/pages/Services";
 import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import Contact from "@/pages/Contact";
+import { SmoothScrollProvider } from "./contexts/SmoothScrollContext";
+import { useEffect } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger);
 
 function Router() {
   return (
@@ -28,17 +35,40 @@ function Router() {
 }
 
 function App() {
+  // Initialize page transition animations
+  useEffect(() => {
+    // Initial page fade in
+    gsap.fromTo(
+      "body",
+      { opacity: 0 },
+      { opacity: 1, duration: 0.6, ease: "power2.out" }
+    );
+
+    // Set up global animation settings
+    gsap.config({
+      nullTargetWarn: false,
+    });
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-grow">
-          <Router />
-        </main>
-        <Footer />
-        <BackToTop />
-      </div>
-      <Toaster />
+      <SmoothScrollProvider options={{ 
+        smooth: true, 
+        smoothMobile: false,
+        lerp: 0.1,
+        inertia: 0.1,
+        getDirection: true,
+      }}>
+        <div className="flex flex-col min-h-screen">
+          <Navbar />
+          <main className="flex-grow">
+            <Router />
+          </main>
+          <Footer />
+          <BackToTop />
+        </div>
+        <Toaster />
+      </SmoothScrollProvider>
     </QueryClientProvider>
   );
 }
