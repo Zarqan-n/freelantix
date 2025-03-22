@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import LocomotiveScroll from 'locomotive-scroll';
-import 'locomotive-scroll/dist/locomotive-scroll.css';
+// Using dynamic import instead of static import to avoid SSR issues
+import type LocomotiveScroll from 'locomotive-scroll';
 
 interface UseLocomotiveScrollOptions {
   ref: React.RefObject<HTMLElement>;

@@ -1,6 +1,7 @@
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./index.css";
+import "locomotive-scroll/dist/locomotive-scroll.css";
 
 // Additional global styles
 import { createGlobalStyle } from "styled-components";
