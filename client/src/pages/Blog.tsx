@@ -1,110 +1,141 @@
-import { useState } from "react";
-import { Link } from "wouter";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
-import { blogPosts, blogCategories } from "@/lib/data";
-import { BlogPost } from "@/lib/types";
+import { Helmet } from 'react-helmet';
+import { useState } from 'react';
+import { Link } from 'wouter';
+import { BlogPost } from '@/lib/types';
+import { useQuery } from '@tanstack/react-query';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Search } from 'lucide-react';
 
 const Blog = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Search is already handled via state
-  };
+  const { data: blogPosts, isLoading } = useQuery<BlogPost[]>({
+    queryKey: ['/api/blog'],
+  });
 
-  const filteredPosts = blogPosts.filter((post) => {
+  const categories = blogPosts ? [...new Set(blogPosts.map(post => post.category))] : [];
+
+  const filteredPosts = blogPosts ? blogPosts.filter(post => {
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
                          post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory ? post.category === selectedCategory : true;
     return matchesSearch && matchesCategory;
-  });
+  }) : [];
+
+  const handleCategoryClick = (category: string) => {
+    setSelectedCategory(category === selectedCategory ? null : category);
+  };
 
   return (
     <>
+      <Helmet>
+        <title>Blog | Freelantix</title>
+        <meta name="description" content="Explore our blog for the latest insights, tips, and trends in web development, digital marketing, UX design, and more." />
+      </Helmet>
+
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-primary to-tertiary text-white py-20">
+      <section className="pt-24 pb-16 bg-primary/5">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
-            <span className="inline-block bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
-              Our Blog
-            </span>
-            <h1 className="text-4xl md:text-5xl font-bold font-montserrat leading-tight mb-6">
-              Latest Insights & News
+            <h1 className="font-heading font-bold text-4xl md:text-5xl text-neutral-800 mb-6">
+              Our <span className="text-primary">Blog</span>
             </h1>
-            <p className="text-xl opacity-90 mb-8">
-              Stay up to date with the latest trends and insights in digital marketing and web development
+            <p className="text-lg text-neutral-600">
+              Discover the latest insights, tips, and trends in web development, digital marketing, UX design, and more.
             </p>
           </div>
         </div>
       </section>
 
       {/* Blog Content */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 lg:py-24 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Main Content */}
-            <div className="lg:w-2/3">
+            <div className="lg:col-span-2">
               {/* Search Results Info */}
-              {(searchTerm || selectedCategory) && (
-                <div className="mb-8 p-4 bg-white rounded-lg shadow">
-                  <h2 className="text-xl font-montserrat font-bold">
-                    {filteredPosts.length} {filteredPosts.length === 1 ? 'result' : 'results'} found
-                    {searchTerm && ` for "${searchTerm}"`}
-                    {selectedCategory && ` in ${selectedCategory}`}
+              {searchTerm && (
+                <div className="mb-8">
+                  <h2 className="text-xl font-medium text-neutral-800">
+                    Search results for: <span className="text-primary">"{searchTerm}"</span>
                   </h2>
-                  <Button 
-                    variant="link" 
-                    onClick={() => {
-                      setSearchTerm("");
-                      setSelectedCategory(null);
-                    }}
-                    className="text-primary p-0 mt-2"
-                  >
-                    Clear filters
-                  </Button>
+                  <p className="text-neutral-600">
+                    Found {filteredPosts.length} {filteredPosts.length === 1 ? 'article' : 'articles'}
+                  </p>
                 </div>
               )}
               
-              {/* Blog Posts Grid */}
-              {filteredPosts.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {filteredPosts.map((post) => (
-                    <article key={post.id} className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition duration-300">
-                      <div className="relative h-48 overflow-hidden">
-                        <img 
-                          src={post.image} 
-                          alt={post.title} 
-                          className="w-full h-full object-cover"
-                        />
-                        <div 
-                          className={`absolute top-4 left-4 bg-${post.categoryColor} text-white text-xs px-3 py-1 rounded-full`}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setSelectedCategory(post.category);
-                          }}
-                          style={{cursor: 'pointer'}}
-                        >
-                          {post.category}
-                        </div>
-                      </div>
+              {/* Category Filter Results Info */}
+              {selectedCategory && !searchTerm && (
+                <div className="mb-8">
+                  <h2 className="text-xl font-medium text-neutral-800">
+                    Category: <span className="text-primary">{selectedCategory}</span>
+                  </h2>
+                  <p className="text-neutral-600">
+                    Found {filteredPosts.length} {filteredPosts.length === 1 ? 'article' : 'articles'}
+                  </p>
+                </div>
+              )}
+              
+              {/* Blog Posts */}
+              {isLoading ? (
+                <div className="space-y-8">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="bg-white rounded-xl shadow-sm overflow-hidden animate-pulse">
+                      <div className="w-full h-64 bg-neutral-200" />
                       <div className="p-6">
-                        <h3 className="font-bold text-xl mb-2 font-montserrat">
-                          <Link href={`/blog/${post.id}`}>
-                            <a className="hover:text-primary transition duration-300">{post.title}</a>
-                          </Link>
-                        </h3>
-                        <p className="text-gray-600 mb-4">
-                          {post.excerpt}
-                        </p>
-                        <div className="flex justify-between items-center">
-                          <span className="text-gray-500 text-sm">{post.date}</span>
-                          <Link href={`/blog/${post.id}`}>
-                            <a className={`text-${post.categoryColor} font-medium text-sm flex items-center`}>
-                              Read More <i className="fas fa-arrow-right ml-2"></i>
-                            </a>
+                        <div className="flex items-center mb-3">
+                          <div className="h-4 w-24 bg-neutral-200 rounded"></div>
+                          <div className="mx-2 h-4 w-2 bg-neutral-200 rounded"></div>
+                          <div className="h-4 w-20 bg-neutral-200 rounded"></div>
+                        </div>
+                        <div className="h-6 w-3/4 bg-neutral-200 rounded mb-3"></div>
+                        <div className="h-4 w-full bg-neutral-200 rounded mb-1"></div>
+                        <div className="h-4 w-full bg-neutral-200 rounded mb-1"></div>
+                        <div className="h-4 w-2/3 bg-neutral-200 rounded mb-4"></div>
+                        <div className="h-4 w-20 bg-neutral-200 rounded"></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : filteredPosts.length > 0 ? (
+                <div className="space-y-8">
+                  {filteredPosts.map((post) => (
+                    <article key={post.id} className="bg-white rounded-xl shadow-sm overflow-hidden hover-lift transition-transform">
+                      <div className="md:flex">
+                        <div className="md:w-1/3">
+                          <img 
+                            src={post.image} 
+                            alt={post.title} 
+                            className="w-full h-64 md:h-full object-cover" 
+                          />
+                        </div>
+                        <div className="md:w-2/3 p-6">
+                          <div className="flex items-center mb-3">
+                            <span className="text-sm text-neutral-500">
+                              <i className="far fa-calendar-alt mr-2"></i> {post.date}
+                            </span>
+                            <span className="mx-2 text-neutral-300">|</span>
+                            <span 
+                              className="text-sm text-primary cursor-pointer hover:text-primary/80"
+                              onClick={() => handleCategoryClick(post.category)}
+                            >
+                              {post.category}
+                            </span>
+                          </div>
+                          <h2 className="font-heading font-semibold text-2xl mb-3 text-neutral-800">
+                            <Link href={`/blog/${post.slug}`}>
+                              {post.title}
+                            </Link>
+                          </h2>
+                          <p className="text-neutral-600 mb-4">{post.excerpt}</p>
+                          <Link 
+                            href={`/blog/${post.slug}`}
+                            className="inline-flex items-center text-primary font-medium"
+                          >
+                            Read More <i className="fas fa-arrow-right ml-2"></i>
                           </Link>
                         </div>
                       </div>
@@ -112,153 +143,76 @@ const Blog = () => {
                   ))}
                 </div>
               ) : (
-                <div className="bg-white p-12 rounded-lg shadow text-center">
-                  <div className="text-gray-400 mb-4"><i className="fas fa-search text-5xl"></i></div>
-                  <h3 className="text-xl font-bold mb-2">No Posts Found</h3>
-                  <p className="text-gray-600 mb-4">We couldn't find any blog posts matching your criteria.</p>
-                  <Button 
-                    variant="outline" 
-                    onClick={() => {
-                      setSearchTerm("");
-                      setSelectedCategory(null);
-                    }}
-                    className="border-primary text-primary hover:bg-primary hover:text-white"
-                  >
-                    Reset Filters
-                  </Button>
-                </div>
-              )}
-              
-              {/* Pagination - Static for now */}
-              {filteredPosts.length > 0 && (
-                <div className="flex justify-center mt-12">
-                  <nav className="inline-flex rounded-md shadow">
-                    <a href="#" className="px-4 py-2 rounded-l-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
-                      Previous
-                    </a>
-                    <a href="#" className="px-4 py-2 border-t border-b border-gray-300 bg-primary text-white">
-                      1
-                    </a>
-                    <a href="#" className="px-4 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
-                      2
-                    </a>
-                    <a href="#" className="px-4 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
-                      3
-                    </a>
-                    <a href="#" className="px-4 py-2 rounded-r-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
-                      Next
-                    </a>
-                  </nav>
+                <div className="bg-neutral-50 rounded-xl p-8 text-center">
+                  <h3 className="text-xl text-neutral-800 mb-2">No articles found</h3>
+                  <p className="text-neutral-600">
+                    {searchTerm || selectedCategory ? 
+                      "Try adjusting your search or category filter." : 
+                      "Check back soon for new articles."}
+                  </p>
                 </div>
               )}
             </div>
             
             {/* Sidebar */}
-            <div className="lg:w-1/3 space-y-8">
-              {/* Search Box */}
-              <div className="bg-white p-6 rounded-xl shadow">
-                <h3 className="text-xl font-bold mb-4 font-montserrat">Search Posts</h3>
-                <form onSubmit={handleSearch} className="flex">
+            <div className="lg:col-span-1">
+              {/* Search */}
+              <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+                <h3 className="font-heading font-semibold text-xl mb-4 text-neutral-800">Search</h3>
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400" size={18} />
                   <Input
                     type="text"
-                    placeholder="Search..."
+                    placeholder="Search articles..."
+                    className="pl-10"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="border border-gray-300 rounded-l-md px-4 py-2 w-full"
                   />
-                  <Button type="submit" className="bg-primary text-white rounded-r-md">
-                    <Search size={18} />
-                  </Button>
-                </form>
-              </div>
-              
-              {/* Categories */}
-              <div className="bg-white p-6 rounded-xl shadow">
-                <h3 className="text-xl font-bold mb-4 font-montserrat">Categories</h3>
-                <ul className="space-y-2">
-                  {blogCategories.map((category, index) => (
-                    <li key={index}>
-                      <Button 
-                        variant="ghost" 
-                        onClick={() => setSelectedCategory(category.name)}
-                        className={`flex items-center w-full justify-start p-2 rounded-md ${
-                          selectedCategory === category.name 
-                            ? 'bg-primary/10 text-primary' 
-                            : 'text-gray-700 hover:bg-gray-100'
-                        }`}
-                      >
-                        <i className={`fas fa-${category.icon} mr-2`}></i>
-                        {category.name}
-                        <span className="ml-auto bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full">
-                          {blogPosts.filter(post => post.category === category.name).length}
-                        </span>
-                      </Button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              
-              {/* Recent Posts */}
-              <div className="bg-white p-6 rounded-xl shadow">
-                <h3 className="text-xl font-bold mb-4 font-montserrat">Recent Posts</h3>
-                <div className="space-y-4">
-                  {blogPosts.slice(0, 4).map((post) => (
-                    <Link key={post.id} href={`/blog/${post.id}`}>
-                      <a className="flex items-start group">
-                        <div className="w-16 h-16 rounded-md overflow-hidden flex-shrink-0">
-                          <img 
-                            src={post.image} 
-                            alt={post.title} 
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div className="ml-4 flex-grow">
-                          <h4 className="font-medium text-gray-800 group-hover:text-primary transition duration-300">
-                            {post.title}
-                          </h4>
-                          <p className="text-sm text-gray-500">{post.date}</p>
-                        </div>
-                      </a>
-                    </Link>
-                  ))}
                 </div>
               </div>
               
-              {/* Tags */}
-              <div className="bg-white p-6 rounded-xl shadow">
-                <h3 className="text-xl font-bold mb-4 font-montserrat">Tags</h3>
-                <div className="flex flex-wrap gap-2">
-                  {['Web Design', 'SEO', 'Marketing', 'UI/UX', 'Development', 'Branding', 'Social Media', 'E-commerce', 'Analytics'].map((tag, index) => (
-                    <Button 
-                      key={index} 
-                      variant="outline" 
-                      className="bg-gray-100 border-gray-100 hover:bg-gray-200 text-gray-700 text-sm rounded-full px-4 py-1"
+              {/* Categories */}
+              <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+                <h3 className="font-heading font-semibold text-xl mb-4 text-neutral-800">Categories</h3>
+                <div className="space-y-2">
+                  {categories.map((category) => (
+                    <Button
+                      key={category}
+                      variant={selectedCategory === category ? "default" : "outline"}
+                      className={selectedCategory === category ? "bg-primary hover:bg-primary/90" : ""}
+                      onClick={() => handleCategoryClick(category)}
                     >
-                      {tag}
+                      {category}
                     </Button>
                   ))}
                 </div>
               </div>
               
-              {/* Newsletter */}
-              <div className="bg-primary text-white p-6 rounded-xl shadow">
-                <h3 className="text-xl font-bold mb-4 font-montserrat">Subscribe to Our Newsletter</h3>
-                <p className="mb-4 opacity-90">Get the latest articles and insights delivered directly to your inbox.</p>
-                <form className="space-y-4">
-                  <Input 
-                    type="email" 
-                    placeholder="Your email address" 
-                    className="px-4 py-3 bg-white/10 border border-white/20 text-white placeholder:text-white/70 rounded-md focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent" 
-                    required
-                  />
-                  <Button 
-                    type="submit" 
-                    className="w-full bg-white text-primary hover:bg-white/90 transition duration-300"
-                  >
-                    Subscribe
-                  </Button>
-                </form>
-              </div>
+              {/* Recent Posts */}
+              {blogPosts && blogPosts.length > 0 && (
+                <div className="bg-white rounded-xl shadow-sm p-6">
+                  <h3 className="font-heading font-semibold text-xl mb-4 text-neutral-800">Recent Posts</h3>
+                  <div className="space-y-4">
+                    {blogPosts.slice(0, 5).map((post) => (
+                      <div key={post.id} className="flex items-start">
+                        <img 
+                          src={post.image} 
+                          alt={post.title} 
+                          className="w-16 h-16 object-cover rounded mr-3" 
+                        />
+                        <div>
+                          <h4 className="font-medium text-neutral-800 hover:text-primary">
+                            <Link href={`/blog/${post.slug}`}>
+                              {post.title}
+                            </Link>
+                          </h4>
+                          <p className="text-sm text-neutral-500">{post.date}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

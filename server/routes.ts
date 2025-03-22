@@ -2,112 +2,188 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { z } from "zod";
-import { contactFormSchema } from "@shared/schema";
+import { insertContactSubmissionSchema, insertNewsletterSubscriptionSchema } from "@shared/schema";
+import { ZodError } from "zod";
+import { fromZodError } from "zod-validation-error";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // prefix all routes with /api
-  
-  // Contact form submission endpoint
-  app.post("/api/contact", async (req, res) => {
+  // Blog routes
+  app.get("/api/blog", async (req, res) => {
     try {
-      // Validate the request body
-      const validatedData = contactFormSchema.parse(req.body);
+      const posts = await storage.getBlogPosts();
       
-      // Store the contact submission
-      const submission = await storage.saveContactSubmission(validatedData);
+      // For each post, add author information
+      const postsWithAuthors = await Promise.all(
+        posts.map(async (post) => {
+          const author = await storage.getUser(post.authorId);
+          return {
+            ...post,
+            author: {
+              name: author?.username || "Unknown Author",
+              avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                author?.username || "Unknown"
+              )}&background=random`
+            }
+          };
+        })
+      );
       
-      // In a real-world app, you might want to send an email here
-      // using a service like SendGrid or Nodemailer
-      
-      res.status(201).json({ 
-        success: true, 
-        message: "Message received! We'll get back to you shortly.",
-        id: submission.id
-      });
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        res.status(400).json({ 
-          success: false, 
-          message: "Invalid form data",
-          errors: error.errors
-        });
-      } else {
-        console.error("Contact form error:", error);
-        res.status(500).json({ 
-          success: false, 
-          message: "An error occurred while processing your message. Please try again later."
-        });
-      }
-    }
-  });
-
-  // Blog posts endpoint
-  app.get("/api/blog", (_req, res) => {
-    try {
-      const posts = storage.getBlogPosts();
-      res.status(200).json(posts);
+      res.json(postsWithAuthors);
     } catch (error) {
       console.error("Error fetching blog posts:", error);
-      res.status(500).json({
-        success: false,
-        message: "Failed to fetch blog posts."
-      });
+      res.status(500).json({ message: "Error fetching blog posts" });
     }
   });
 
-  // Single blog post endpoint
-  app.get("/api/blog/:id", (req, res) => {
+  app.get("/api/blog/recent", async (req, res) => {
     try {
-      const postId = req.params.id;
-      const post = storage.getBlogPostById(postId);
+      const limit = req.query.limit ? parseInt(req.query.limit as string) : 3;
+      const posts = await storage.getRecentBlogPosts(limit);
+      
+      // For each post, add author information
+      const postsWithAuthors = await Promise.all(
+        posts.map(async (post) => {
+          const author = await storage.getUser(post.authorId);
+          return {
+            ...post,
+            author: {
+              name: author?.username || "Unknown Author",
+              avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                author?.username || "Unknown"
+              )}&background=random`
+            }
+          };
+        })
+      );
+      
+      res.json(postsWithAuthors);
+    } catch (error) {
+      console.error("Error fetching recent blog posts:", error);
+      res.status(500).json({ message: "Error fetching recent blog posts" });
+    }
+  });
+
+  app.get("/api/blog/:slug", async (req, res) => {
+    try {
+      const { slug } = req.params;
+      const post = await storage.getBlogPostBySlug(slug);
       
       if (!post) {
-        return res.status(404).json({
-          success: false,
-          message: "Blog post not found."
-        });
+        return res.status(404).json({ message: "Blog post not found" });
       }
       
-      res.status(200).json(post);
-    } catch (error) {
-      console.error(`Error fetching blog post ${req.params.id}:`, error);
-      res.status(500).json({
-        success: false,
-        message: "Failed to fetch blog post."
+      const author = await storage.getUser(post.authorId);
+      
+      res.json({
+        ...post,
+        author: {
+          name: author?.username || "Unknown Author",
+          avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(
+            author?.username || "Unknown"
+          )}&background=random`
+        }
       });
+    } catch (error) {
+      console.error("Error fetching blog post:", error);
+      res.status(500).json({ message: "Error fetching blog post" });
     }
   });
 
-  // Newsletter subscription endpoint
+  app.get("/api/blog/related/:slug", async (req, res) => {
+    try {
+      const { slug } = req.params;
+      const limit = req.query.limit ? parseInt(req.query.limit as string) : 3;
+      
+      const post = await storage.getBlogPostBySlug(slug);
+      
+      if (!post) {
+        return res.status(404).json({ message: "Blog post not found" });
+      }
+      
+      const relatedPosts = await storage.getRelatedBlogPosts(post.id, limit);
+      
+      // For each post, add author information
+      const postsWithAuthors = await Promise.all(
+        relatedPosts.map(async (post) => {
+          const author = await storage.getUser(post.authorId);
+          return {
+            ...post,
+            author: {
+              name: author?.username || "Unknown Author",
+              avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                author?.username || "Unknown"
+              )}&background=random`
+            }
+          };
+        })
+      );
+      
+      res.json(postsWithAuthors);
+    } catch (error) {
+      console.error("Error fetching related blog posts:", error);
+      res.status(500).json({ message: "Error fetching related blog posts" });
+    }
+  });
+
+  // Contact form submission
+  app.post("/api/contact", async (req, res) => {
+    try {
+      const validatedData = insertContactSubmissionSchema.parse(req.body);
+      const submission = await storage.createContactSubmission(validatedData);
+      
+      res.status(201).json({ message: "Message sent successfully", id: submission.id });
+    } catch (error) {
+      if (error instanceof ZodError) {
+        const validationError = fromZodError(error);
+        return res.status(400).json({ message: validationError.message });
+      }
+      
+      console.error("Error processing contact form:", error);
+      res.status(500).json({ message: "Failed to send message" });
+    }
+  });
+
+  // Newsletter subscription
   app.post("/api/newsletter", async (req, res) => {
     try {
-      // Validate email
-      const validatedData = z.object({
-        email: z.string().email("Please enter a valid email address")
-      }).parse(req.body);
+      const validatedData = insertNewsletterSubscriptionSchema.parse(req.body);
+      const subscription = await storage.subscribeToNewsletter(validatedData);
       
-      // Store the subscriber
-      const subscriber = await storage.saveNewsletterSubscriber(validatedData.email);
-      
-      res.status(201).json({
-        success: true,
-        message: "Thank you for subscribing to our newsletter!",
-        id: subscriber.id
-      });
+      res.status(201).json({ message: "Subscribed successfully", id: subscription.id });
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        res.status(400).json({
-          success: false,
-          message: "Invalid email address",
-          errors: error.errors
-        });
-      } else {
-        console.error("Newsletter subscription error:", error);
-        res.status(500).json({
-          success: false,
-          message: "An error occurred while processing your subscription. Please try again later."
-        });
+      if (error instanceof ZodError) {
+        const validationError = fromZodError(error);
+        return res.status(400).json({ message: validationError.message });
       }
+      
+      console.error("Error processing newsletter subscription:", error);
+      res.status(500).json({ message: "Failed to subscribe" });
+    }
+  });
+
+  // Unsubscribe from newsletter
+  app.post("/api/newsletter/unsubscribe", async (req, res) => {
+    try {
+      const schema = z.object({
+        email: z.string().email()
+      });
+      
+      const { email } = schema.parse(req.body);
+      const success = await storage.unsubscribeFromNewsletter(email);
+      
+      if (success) {
+        res.json({ message: "Unsubscribed successfully" });
+      } else {
+        res.status(404).json({ message: "Email not found in subscription list" });
+      }
+    } catch (error) {
+      if (error instanceof ZodError) {
+        const validationError = fromZodError(error);
+        return res.status(400).json({ message: validationError.message });
+      }
+      
+      console.error("Error processing unsubscribe request:", error);
+      res.status(500).json({ message: "Failed to unsubscribe" });
     }
   });
 

@@ -1,177 +1,195 @@
-import { useState } from "react";
-import { Link, useLocation } from "wouter";
-import { Button } from "@/components/ui/button";
-import { useScrollspy } from "@/hooks/use-scrollspy";
-import { services } from "@/lib/data";
-import { 
-  Laptop, 
-  TrendingUp, 
-  Smartphone, 
-  Search, 
-  MessageSquare, 
-  Palette, 
-  ArrowRight 
-} from "lucide-react";
+import { Helmet } from 'react-helmet';
+import { Link } from 'wouter';
+import { Button } from '@/components/ui/button';
+import { Service } from '@/lib/types';
 
 const Services = () => {
-  const [_, setLocation] = useLocation();
-  const activeSection = useScrollspy(['web-design', 'digital-marketing', 'app-development', 'seo', 'social-media', 'brand-identity'], { offset: 200 });
-  
-  const getServiceIcon = (id: string) => {
-    switch (id) {
-      case "web-design":
-        return <Laptop className="text-2xl" />;
-      case "digital-marketing":
-        return <TrendingUp className="text-2xl" />;
-      case "app-development":
-        return <Smartphone className="text-2xl" />;
-      case "seo":
-        return <Search className="text-2xl" />;
-      case "social-media":
-        return <MessageSquare className="text-2xl" />;
-      case "brand-identity":
-        return <Palette className="text-2xl" />;
-      default:
-        return <Laptop className="text-2xl" />;
+  const servicesData: Service[] = [
+    {
+      id: 1,
+      title: "Web Development",
+      description: "We build custom, responsive websites that engage visitors and drive conversions. Our web development services include:",
+      icon: "fas fa-code",
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600&q=80"
+    },
+    {
+      id: 2,
+      title: "E-Commerce Solutions",
+      description: "Transform your business with our comprehensive e-commerce solutions designed to maximize sales and enhance user experience:",
+      icon: "fas fa-shopping-cart",
+      image: "https://images.unsplash.com/photo-1557838923-2985c318be48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600&q=80"
+    },
+    {
+      id: 3,
+      title: "Mobile App Development",
+      description: "We create intuitive, feature-rich mobile applications that provide exceptional user experiences across all devices:",
+      icon: "fas fa-mobile-alt",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600&q=80"
+    },
+    {
+      id: 4,
+      title: "Digital Marketing",
+      description: "Our data-driven digital marketing strategies help you reach your target audience and achieve measurable results:",
+      icon: "fas fa-bullhorn",
+      image: "https://images.unsplash.com/photo-1533750349088-cd871a92f8bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600&q=80"
+    },
+    {
+      id: 5,
+      title: "UI/UX Design",
+      description: "We create stunning, user-centered designs that enhance user engagement and drive business goals:",
+      icon: "fas fa-paint-brush",
+      image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600&q=80"
+    },
+    {
+      id: 6,
+      title: "SEO & Content Strategy",
+      description: "Improve your search engine rankings and drive organic traffic with our comprehensive SEO services:",
+      icon: "fas fa-search",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600&q=80"
     }
+  ];
+
+  const serviceFeatures = {
+    "Web Development": [
+      "Custom website design and development",
+      "Content Management System (CMS) implementation",
+      "Progressive Web Applications (PWA)",
+      "Website performance optimization",
+      "API development and integration",
+      "Maintenance and support"
+    ],
+    "E-Commerce Solutions": [
+      "Custom online store development",
+      "Product catalog management",
+      "Secure payment gateway integration",
+      "Inventory management systems",
+      "Customer account management",
+      "Mobile-responsive shopping experiences"
+    ],
+    "Mobile App Development": [
+      "iOS and Android app development",
+      "Cross-platform applications",
+      "UI/UX design for mobile",
+      "App testing and quality assurance",
+      "App store optimization",
+      "Ongoing maintenance and updates"
+    ],
+    "Digital Marketing": [
+      "Search Engine Marketing (SEM)",
+      "Social media marketing",
+      "Email marketing campaigns",
+      "Content marketing",
+      "Pay-per-click (PPC) advertising",
+      "Analytics and performance tracking"
+    ],
+    "UI/UX Design": [
+      "User research and persona development",
+      "Wireframing and prototyping",
+      "Visual design and branding",
+      "Interaction design",
+      "Usability testing",
+      "Design systems"
+    ],
+    "SEO & Content Strategy": [
+      "SEO audits and strategy development",
+      "Keyword research and optimization",
+      "On-page and off-page SEO",
+      "Content creation and optimization",
+      "Local SEO for businesses",
+      "SEO performance reporting"
+    ]
   };
 
   return (
     <>
+      <Helmet>
+        <title>Services | Freelantix</title>
+        <meta name="description" content="Explore our comprehensive range of digital services including web development, e-commerce solutions, mobile app development, UI/UX design, and more." />
+      </Helmet>
+
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-primary to-tertiary text-white py-20">
+      <section className="pt-24 pb-16 bg-primary/5">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
-            <span className="inline-block bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
-              Our Services
-            </span>
-            <h1 className="text-4xl md:text-5xl font-bold font-montserrat leading-tight mb-6">
-              Innovative Digital Solutions for Your Business
+            <h1 className="font-heading font-bold text-4xl md:text-5xl text-neutral-800 mb-6">
+              Our <span className="text-primary">Services</span>
             </h1>
-            <p className="text-xl opacity-90 mb-8">
-              We offer a comprehensive range of digital services designed to help your business thrive in the digital landscape.
+            <p className="text-lg text-neutral-600">
+              We offer a comprehensive range of digital services to help your business thrive in the digital landscape. From web development to digital marketing, we've got you covered.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button 
-                className="bg-white text-primary hover:bg-gray-100"
-                onClick={() => document.getElementById('services-list')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                Explore Services
-              </Button>
-              <Link href="/contact">
-                <Button variant="outline" className="border-white text-white hover:bg-white/10">
-                  Get a Quote
-                </Button>
-              </Link>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Services Navigation */}
-      <div className="sticky top-16 z-40 bg-white shadow-sm">
+      {/* Services Section */}
+      <section className="py-16 lg:py-24 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex overflow-x-auto py-4 gap-6 no-scrollbar" id="services-list">
-            {services.map((service) => (
-              <a 
-                key={service.id}
-                href={`#${service.id}`}
-                className={`whitespace-nowrap pb-2 border-b-2 font-medium transition-colors duration-300 px-1 ${
-                  activeSection === service.id 
-                    ? `border-${service.colorClass} text-${service.colorClass}` 
-                    : 'border-transparent text-gray-500 hover:text-gray-900'
-                }`}
-              >
-                {service.title}
-              </a>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Individual Service Sections */}
-      <div className="bg-gray-50 py-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          {services.map((service, index) => (
-            <section 
-              key={service.id} 
-              id={service.id} 
-              className={`py-16 ${index !== services.length - 1 ? 'border-b border-gray-200' : ''}`}
+          {servicesData.map((service, index) => (
+            <div 
+              key={service.id}
+              id={service.title.toLowerCase().replace(/\s+/g, '-')}
+              className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${index !== 0 ? 'mt-24' : ''}`}
             >
-              <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
-                <div>
-                  <span className={`text-sm font-medium text-${service.colorClass} bg-${service.colorClass}/10 px-4 py-1 rounded-full`}>
-                    {service.category}
-                  </span>
-                  <h2 className="text-3xl md:text-4xl font-bold mt-4 mb-6 font-montserrat">{service.title}</h2>
-                  <p className="text-gray-600 mb-6">{service.description}</p>
-                  <div className="space-y-4 mb-8">
-                    {service.features.map((feature, i) => (
-                      <div key={i} className="flex items-start">
-                        <div className={`bg-${service.colorClass}/10 p-2 rounded-lg mr-4`}>
-                          <i className={`fas fa-check text-${service.colorClass}`}></i>
-                        </div>
-                        <div>
-                          <h4 className="font-bold text-lg">{feature.title}</h4>
-                          <p className="text-gray-600">{feature.description}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+              <div className={index % 2 === 0 ? 'order-1 lg:order-1' : 'order-1 lg:order-2'}>
+                <div className="w-16 h-16 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-6">
+                  <i className={`${service.icon} text-3xl`}></i>
+                </div>
+                <h2 className="font-heading font-bold text-3xl text-neutral-800 mb-6">
+                  {service.title}
+                </h2>
+                <p className="text-neutral-600 mb-6">
+                  {service.description}
+                </p>
+                
+                <ul className="space-y-3 mb-8">
+                  {serviceFeatures[service.title as keyof typeof serviceFeatures].map((feature, i) => (
+                    <li key={i} className="flex items-start">
+                      <span className="text-primary mr-3"><i className="fas fa-check"></i></span>
+                      <span className="text-neutral-600">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                
+                <Button asChild className="bg-primary hover:bg-primary/90">
                   <Link href="/contact">
-                    <Button className={`bg-${service.colorClass} text-white hover:bg-${service.colorClass}/90`}>
-                      Get Started <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
+                    Get Started
                   </Link>
-                </div>
-                <div className="relative">
-                  <div className="bg-white p-8 rounded-xl shadow-xl">
-                    <div className={`w-20 h-20 bg-${service.colorClass}/10 rounded-xl flex items-center justify-center mb-6 mx-auto`}>
-                      {getServiceIcon(service.id)}
-                    </div>
-                    <h3 className="text-2xl font-bold text-center mb-4 font-montserrat">{service.title}</h3>
-                    <ul className="space-y-3">
-                      {service.benefits.map((benefit, i) => (
-                        <li key={i} className="flex items-center">
-                          <i className={`fas fa-check-circle text-${service.colorClass} mr-2`}></i>
-                          <span>{benefit}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    {service.pricing && (
-                      <div className="mt-8 text-center">
-                        <p className="text-gray-500">Starting at</p>
-                        <p className="text-3xl font-bold font-montserrat">{service.pricing}</p>
-                      </div>
-                    )}
-                  </div>
-                  <div className={`absolute -bottom-4 -right-4 w-32 h-32 bg-${service.colorClass} opacity-10 rounded-lg -z-10`}></div>
-                </div>
+                </Button>
               </div>
-            </section>
+              
+              <div className={index % 2 === 0 ? 'order-2 lg:order-2' : 'order-2 lg:order-1'}>
+                <img 
+                  src={service.image} 
+                  alt={service.title} 
+                  className="w-full h-auto rounded-2xl shadow-xl" 
+                />
+              </div>
+            </div>
           ))}
         </div>
-      </div>
+      </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary to-tertiary text-white">
+      <section className="py-16 lg:py-24 bg-primary">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 font-montserrat">Ready to Get Started?</h2>
-            <p className="text-xl mb-8 opacity-90">
-              Let's discuss how we can help you achieve your business goals through our digital services.
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="font-heading font-bold text-3xl lg:text-4xl text-white mb-6">
+              Ready to start your project?
+            </h2>
+            <p className="text-white/80 text-lg mb-10 max-w-2xl mx-auto">
+              Let's discuss how we can help you achieve your business goals with our comprehensive digital solutions.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-              <Link href="/contact">
-                <Button className="bg-white text-primary hover:bg-gray-100 font-bold px-8 py-6">
-                  Contact Us Today
-                </Button>
-              </Link>
-              <Link href="/about">
-                <Button variant="outline" className="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-6">
-                  Learn About Our Team
-                </Button>
-              </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button asChild size="lg" className="bg-white text-primary hover:bg-neutral-100">
+                <Link href="/contact">
+                  Get in Touch
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+                <Link href="/about">
+                  Learn More About Us
+                </Link>
+              </Button>
             </div>
           </div>
         </div>

@@ -1,106 +1,112 @@
-import { useState, useEffect } from "react";
-import { Link, useLocation } from "wouter";
-import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
-
-const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
-  const [location] = useLocation();
-  const isActive = location === href;
-
-  return (
-    <Link href={href}>
-      <a className={`font-medium hover:text-primary transition duration-300 ${isActive ? "text-primary" : "text-gray-700"}`}>
-        {children}
-      </a>
-    </Link>
-  );
-};
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'wouter';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { Menu, X } from 'lucide-react';
 
 const Navbar = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [location] = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      setIsScrolled(window.scrollY > 20);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
+
+  const navItems = [
+    { label: 'Home', path: '/' },
+    { label: 'Services', path: '/services' },
+    { label: 'About', path: '/about' },
+    { label: 'Blog', path: '/blog' },
+    { label: 'Contact', path: '/contact' },
+  ];
+
+  const isActive = (path: string) => {
+    return path === '/' ? location === path : location.startsWith(path);
   };
 
   return (
-    <header className={`sticky top-0 z-50 ${isScrolled ? "bg-white shadow-sm" : "bg-white"} transition-all duration-300`}>
+    <header className={cn(
+      "fixed w-full bg-white z-50 transition-all duration-300",
+      isScrolled ? "shadow-md py-2" : "shadow-sm py-4"
+    )}>
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <Link href="/">
-              <a className="flex items-center">
-                <span className="text-2xl font-bold text-primary font-montserrat">Freelantix</span>
-              </a>
+            <Link href="/" className="flex items-center">
+              <span className="text-primary font-heading font-bold text-2xl">Freelantix</span>
             </Link>
           </div>
           
-          {/* Desktop Nav */}
+          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <NavLink href="/">Home</NavLink>
-            <NavLink href="/services">Services</NavLink>
-            <NavLink href="/about">About</NavLink>
-            <NavLink href="/blog">Blog</NavLink>
-            <NavLink href="/contact">Contact</NavLink>
-            <Button className="bg-primary text-white hover:bg-primary/90">Get Started</Button>
+            {navItems.map((item) => (
+              <Link 
+                key={item.path} 
+                href={item.path}
+                className={cn(
+                  "text-neutral-700 hover:text-primary font-medium",
+                  isActive(item.path) && "text-primary"
+                )}
+              >
+                {item.label}
+              </Link>
+            ))}
+            <Button asChild className="bg-primary hover:bg-primary/90">
+              <Link href="/contact">Get Started</Link>
+            </Button>
           </div>
           
-          {/* Mobile Nav Button */}
+          {/* Mobile menu button */}
           <div className="md:hidden flex items-center">
             <Button 
               variant="ghost" 
-              size="icon" 
-              onClick={toggleMobileMenu}
-              aria-label="Toggle menu"
+              onClick={toggleMenu} 
+              className="text-neutral-700 hover:text-primary"
+              aria-label="Toggle Menu"
             >
-              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
             </Button>
           </div>
         </div>
         
-        {/* Mobile Nav Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden px-2 pt-2 pb-4 space-y-2">
-            <Link href="/">
-              <a className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">
-                Home
-              </a>
-            </Link>
-            <Link href="/services">
-              <a className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">
-                Services
-              </a>
-            </Link>
-            <Link href="/about">
-              <a className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">
-                About
-              </a>
-            </Link>
-            <Link href="/blog">
-              <a className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">
-                Blog
-              </a>
-            </Link>
-            <Link href="/contact">
-              <a className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">
-                Contact
-              </a>
-            </Link>
-            <Button className="w-full bg-primary text-white hover:bg-primary/90">
-              Get Started
+        {/* Mobile Navigation */}
+        <div className={cn("md:hidden", isOpen ? "block" : "hidden")}>
+          <div className="px-2 pt-2 pb-4 space-y-1 sm:px-3">
+            {navItems.map((item) => (
+              <Link 
+                key={item.path} 
+                href={item.path}
+                onClick={closeMenu}
+                className={cn(
+                  "block py-2 px-3 text-neutral-700 hover:text-primary font-medium",
+                  isActive(item.path) && "text-primary"
+                )}
+              >
+                {item.label}
+              </Link>
+            ))}
+            <Button 
+              asChild 
+              className="w-full mt-4 bg-primary hover:bg-primary/90"
+            >
+              <Link href="/contact" onClick={closeMenu}>Get Started</Link>
             </Button>
           </div>
-        )}
+        </div>
       </nav>
     </header>
   );
