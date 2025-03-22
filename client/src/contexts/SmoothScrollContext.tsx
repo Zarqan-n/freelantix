@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useRef } from 'react';
-import useLocomotiveScroll from '@/hooks/use-locomotive-scroll';
 
 interface SmoothScrollContextType {
   scrollRef: React.RefObject<HTMLElement>;
@@ -28,17 +27,26 @@ interface SmoothScrollProviderProps {
 export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({
   children,
   options = {
-    smooth: true,
-    smoothMobile: false,
-    inertia: 0.1,
-    lerp: 0.1,
+    smooth: false, // Disabled smooth scrolling
   },
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { locomotiveScroll, scrollTo, update, isReady } = useLocomotiveScroll({
-    ref: scrollRef as React.RefObject<HTMLElement>,
-    ...options,
-  });
+  
+  // Simple stub implementations for compatibility
+  const scrollTo = (target: string | HTMLElement, options?: any) => {
+    if (typeof target === 'string') {
+      const element = document.querySelector(target);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else if (target instanceof HTMLElement) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+  
+  const update = () => {};
+  const isReady = true;
+  const locomotiveScroll = null;
 
   return (
     <SmoothScrollContext.Provider
@@ -52,7 +60,6 @@ export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({
     >
       <div
         ref={scrollRef}
-        data-scroll-container
         className="smooth-scroll-container"
       >
         {children}
