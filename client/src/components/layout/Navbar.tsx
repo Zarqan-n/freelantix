@@ -3,14 +3,11 @@ import { Link, useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Menu, X, ChevronRight } from 'lucide-react';
-import ThemeToggle from '@/components/ThemeToggle';
-import { useTheme } from '@/contexts/ThemeContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [location] = useLocation();
-  const { theme } = useTheme();
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   // Handle scroll effects
@@ -98,15 +95,13 @@ const Navbar = () => {
                 {item.label}
               </Link>
             ))}
-            <ThemeToggle />
             <Button asChild className="bg-primary hover:bg-primary/90">
               <Link href="/contact">Get Started</Link>
             </Button>
           </div>
           
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center space-x-2">
-            <ThemeToggle />
+          <div className="md:hidden flex items-center">
             <Button 
               variant="ghost" 
               onClick={toggleMenu} 
