@@ -7,48 +7,26 @@
 
 @layer base {
   :root {
-    --background: 220 25% 95%;
-    --foreground: 220 25% 10%;
-    --card: 220 20% 97%;
-    --card-foreground: 220 25% 10%;
-    --popover: 220 20% 97%;
-    --popover-foreground: 220 25% 10%;
-    --primary: 265 80% 45%;
+    --background: 30 20% 97%;
+    --foreground: 30 30% 10%;
+    --card: 30 15% 95%;
+    --card-foreground: 30 30% 10%;
+    --popover: 30 15% 95%;
+    --popover-foreground: 30 30% 10%;
+    --primary: 350 80% 45%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 265 20% 90%;
-    --secondary-foreground: 265 25% 20%;
-    --muted: 220 15% 92%;
-    --muted-foreground: 220 15% 40%;
-    --accent: 190 80% 50%;
+    --secondary: 25 40% 92%;
+    --secondary-foreground: 25 30% 20%;
+    --muted: 30 10% 90%;
+    --muted-foreground: 30 10% 40%;
+    --accent: 160 50% 40%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 80% 50%;
+    --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 15% 85%;
-    --input: 220 15% 85%;
-    --ring: 265 80% 45%;
-    --radius: 0.6rem;
-  }
-  
-  .dark {
-    --background: 222 35% 15%;
-    --foreground: 220 15% 95%;
-    --card: 222 30% 20%;
-    --card-foreground: 220 15% 95%;
-    --popover: 222 30% 20%;
-    --popover-foreground: 220 15% 95%;
-    --primary: 265 80% 45%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 222 30% 25%;
-    --secondary-foreground: 220 15% 90%;
-    --muted: 222 30% 25%;
-    --muted-foreground: 220 15% 70%;
-    --accent: 190 80% 45%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 75% 45%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 222 30% 25%;
-    --input: 222 30% 25%;
-    --ring: 265 80% 45%;
+    --border: 30 15% 85%;
+    --input: 30 15% 85%;
+    --ring: 350 80% 45%;
+    --radius: 0.5rem;
   }
 
   * {
@@ -74,45 +52,26 @@
   }
 
   /* Button styling */
-  button.btn-primary {
-    @apply bg-primary hover:bg-primary/90 text-primary-foreground shadow-md hover:shadow-lg transition-all;
+  .btn {
+    @apply rounded-md px-4 py-2 font-medium shadow-sm hover:shadow-md transition-all duration-300 
+    inline-flex items-center justify-center gap-2;
   }
   
-  button.btn-secondary {
-    @apply bg-secondary hover:bg-secondary/90 text-secondary-foreground shadow-sm hover:shadow-md transition-all;
+  .btn-primary {
+    @apply bg-primary hover:bg-primary/90 text-primary-foreground;
   }
   
-  button.btn-accent {
-    @apply bg-accent hover:bg-accent/90 text-accent-foreground shadow-md hover:shadow-lg transition-all;
+  .btn-secondary {
+    @apply bg-secondary hover:bg-secondary/90 text-secondary-foreground;
   }
   
-  /* Dark mode specific adjustments */
-  .dark {
-    @apply bg-background;
-  }
-
-  .dark button.btn-primary {
-    @apply shadow-primary/20;
+  .btn-accent {
+    @apply bg-accent hover:bg-accent/90 text-accent-foreground;
   }
   
-  .dark button.btn-accent {
-    @apply shadow-accent/20;
-  }
-  
-  .dark .card {
-    @apply bg-card border-border/50;
-  }
-  
-  .dark .glass-effect {
-    @apply bg-card/80 backdrop-blur-lg border-white/10;
-  }
-  
-  .dark img {
-    @apply brightness-90;
-  }
-  
-  .dark input, .dark textarea, .dark select {
-    @apply bg-card border-input;
+  .btn-outline {
+    @apply border border-primary text-primary hover:bg-primary/10 rounded-md px-4 py-2
+    transition-all duration-300 inline-flex items-center justify-center gap-2;
   }
 
   /* Custom scrollbar */
@@ -237,15 +196,5 @@
   .swiper-button-prev,
   .swiper-button-next {
     @apply text-primary;
-  }
-  
-  /* Dark mode adjustments for swiper */
-  .dark .swiper-pagination-bullet {
-    @apply bg-primary/70;
-  }
-  
-  .dark .swiper-button-prev,
-  .dark .swiper-button-next {
-    @apply text-primary/90;
   }
 }

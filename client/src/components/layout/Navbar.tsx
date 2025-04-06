@@ -3,7 +3,6 @@ import { Link, useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Menu, X, ChevronRight } from 'lucide-react';
-import ThemeToggle from '@/components/ThemeToggle';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -97,8 +96,7 @@ const Navbar = () => {
               </Link>
             ))}
             <div className="flex items-center gap-4">
-              <ThemeToggle />
-              <Button asChild className="bg-primary hover:bg-primary/90">
+              <Button asChild className="btn btn-primary">
                 <Link href="/contact">Get Started</Link>
               </Button>
             </div>
@@ -106,7 +104,6 @@ const Navbar = () => {
           
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center gap-2">
-            <ThemeToggle />
             <Button 
               variant="ghost" 
               onClick={toggleMenu} 
@@ -164,7 +161,7 @@ const Navbar = () => {
             <div className="mt-8">
               <Button 
                 asChild 
-                className="w-full bg-primary hover:bg-primary/90"
+                className="w-full btn btn-primary"
                 size="lg"
               >
                 <Link href="/contact">Get Started</Link>
