@@ -12,6 +12,7 @@ import Services from "@/pages/Services";
 import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import Contact from "@/pages/Contact";
+import { ThemeProvider } from "./contexts/ThemeContext";
 import { SmoothScrollProvider } from "./contexts/SmoothScrollContext";
 import { useEffect } from "react";
 import { gsap } from "gsap";
@@ -36,17 +37,19 @@ function Router() {
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <SmoothScrollProvider>
-        <div className="flex min-h-screen flex-col">
-          <Navbar />
-          <div className="flex-1">
-            <Router />
+      <ThemeProvider>
+        <SmoothScrollProvider>
+          <div className="flex min-h-screen flex-col">
+            <Navbar />
+            <div className="flex-1">
+              <Router />
+            </div>
+            <Footer />
+            <BackToTop />
+            <Toaster />
           </div>
-          <Footer />
-          <BackToTop />
-          <Toaster />
-        </div>
-      </SmoothScrollProvider>
+        </SmoothScrollProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

@@ -7,26 +7,48 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.5rem;
+    --background: 220 25% 95%;
+    --foreground: 220 25% 10%;
+    --card: 220 20% 97%;
+    --card-foreground: 220 25% 10%;
+    --popover: 220 20% 97%;
+    --popover-foreground: 220 25% 10%;
+    --primary: 265 80% 45%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 265 20% 90%;
+    --secondary-foreground: 265 25% 20%;
+    --muted: 220 15% 92%;
+    --muted-foreground: 220 15% 40%;
+    --accent: 190 80% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 80% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 15% 85%;
+    --input: 220 15% 85%;
+    --ring: 265 80% 45%;
+    --radius: 0.6rem;
+  }
+  
+  .dark {
+    --background: 222 35% 15%;
+    --foreground: 220 15% 95%;
+    --card: 222 30% 20%;
+    --card-foreground: 220 15% 95%;
+    --popover: 222 30% 20%;
+    --popover-foreground: 220 15% 95%;
+    --primary: 265 80% 45%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 222 30% 25%;
+    --secondary-foreground: 220 15% 90%;
+    --muted: 222 30% 25%;
+    --muted-foreground: 220 15% 70%;
+    --accent: 190 80% 45%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 75% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 222 30% 25%;
+    --input: 222 30% 25%;
+    --ring: 265 80% 45%;
   }
 
   * {
@@ -51,8 +73,46 @@
     @apply text-primary hover:text-primary/80 transition-colors duration-300;
   }
 
-  button {
-    @apply text-primary-foreground;
+  /* Button styling */
+  button.btn-primary {
+    @apply bg-primary hover:bg-primary/90 text-primary-foreground shadow-md hover:shadow-lg transition-all;
+  }
+  
+  button.btn-secondary {
+    @apply bg-secondary hover:bg-secondary/90 text-secondary-foreground shadow-sm hover:shadow-md transition-all;
+  }
+  
+  button.btn-accent {
+    @apply bg-accent hover:bg-accent/90 text-accent-foreground shadow-md hover:shadow-lg transition-all;
+  }
+  
+  /* Dark mode specific adjustments */
+  .dark {
+    @apply bg-background;
+  }
+
+  .dark button.btn-primary {
+    @apply shadow-primary/20;
+  }
+  
+  .dark button.btn-accent {
+    @apply shadow-accent/20;
+  }
+  
+  .dark .card {
+    @apply bg-card border-border/50;
+  }
+  
+  .dark .glass-effect {
+    @apply bg-card/80 backdrop-blur-lg border-white/10;
+  }
+  
+  .dark img {
+    @apply brightness-90;
+  }
+  
+  .dark input, .dark textarea, .dark select {
+    @apply bg-card border-input;
   }
 
   /* Custom scrollbar */
@@ -134,6 +194,37 @@
 }
 
 @layer utilities {
+  /* Glass effects */
+  .glass-effect {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-lg;
+  }
+  
+  .glass-card {
+    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-md rounded-lg;
+  }
+  
+  .glass-dark {
+    @apply bg-black/40 backdrop-blur-md border border-white/10 shadow-lg;
+  }
+  
+  /* Transition utilities */
+  .transition-fast {
+    @apply transition-all duration-200 ease-in-out;
+  }
+  
+  .transition-medium {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  
+  .transition-slow {
+    @apply transition-all duration-500 ease-in-out;
+  }
+  
+  /* Gradient text */
+  .gradient-text {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent;
+  }
+  
   /* Testimonial swiper styles */
   .swiper-pagination-bullet {
     @apply bg-primary/50 opacity-50;
@@ -146,5 +237,15 @@
   .swiper-button-prev,
   .swiper-button-next {
     @apply text-primary;
+  }
+  
+  /* Dark mode adjustments for swiper */
+  .dark .swiper-pagination-bullet {
+    @apply bg-primary/70;
+  }
+  
+  .dark .swiper-button-prev,
+  .dark .swiper-button-next {
+    @apply text-primary/90;
   }
 }
