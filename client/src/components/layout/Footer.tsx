@@ -44,14 +44,14 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-neutral-800 text-white py-16">
+    <footer className="bg-card text-foreground py-16">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           <div>
             <Link href="/" className="inline-block mb-6">
-              <span className="text-white font-heading font-bold text-2xl">Freelantix</span>
+              <span className="text-primary font-heading font-bold text-2xl">Freelantix</span>
             </Link>
-            <p className="text-neutral-400 mb-6">
+            <p className="text-muted-foreground mb-6">
               We create digital experiences that help businesses grow in the digital world.
             </p>
             <div className="flex space-x-4">
@@ -59,7 +59,7 @@ const Footer = () => {
                 href="https://facebook.com" 
                 target="_blank" 
                 rel="noreferrer"
-                className="text-neutral-400 hover:text-white transition duration-300"
+                className="text-primary/70 hover:text-primary transition duration-300"
                 aria-label="Facebook"
               >
                 <i className="fab fa-facebook-f"></i>
@@ -68,7 +68,7 @@ const Footer = () => {
                 href="https://twitter.com" 
                 target="_blank" 
                 rel="noreferrer"
-                className="text-neutral-400 hover:text-white transition duration-300"
+                className="text-primary/70 hover:text-primary transition duration-300"
                 aria-label="Twitter"
               >
                 <i className="fab fa-twitter"></i>
@@ -77,7 +77,7 @@ const Footer = () => {
                 href="https://instagram.com" 
                 target="_blank" 
                 rel="noreferrer"
-                className="text-neutral-400 hover:text-white transition duration-300"
+                className="text-primary/70 hover:text-primary transition duration-300"
                 aria-label="Instagram"
               >
                 <i className="fab fa-instagram"></i>
@@ -86,7 +86,7 @@ const Footer = () => {
                 href="https://linkedin.com" 
                 target="_blank" 
                 rel="noreferrer"
-                className="text-neutral-400 hover:text-white transition duration-300"
+                className="text-primary/70 hover:text-primary transition duration-300"
                 aria-label="LinkedIn"
               >
                 <i className="fab fa-linkedin-in"></i>
@@ -98,32 +98,32 @@ const Footer = () => {
             <h3 className="font-heading font-semibold text-lg mb-6">Services</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/services#web-development" className="text-neutral-400 hover:text-white transition duration-300">
+                <Link href="/services#web-development" className="text-muted-foreground hover:text-primary transition duration-300">
                   Web Development
                 </Link>
               </li>
               <li>
-                <Link href="/services#ecommerce" className="text-neutral-400 hover:text-white transition duration-300">
+                <Link href="/services#ecommerce" className="text-muted-foreground hover:text-primary transition duration-300">
                   E-Commerce Solutions
                 </Link>
               </li>
               <li>
-                <Link href="/services#mobile-apps" className="text-neutral-400 hover:text-white transition duration-300">
+                <Link href="/services#mobile-apps" className="text-muted-foreground hover:text-primary transition duration-300">
                   Mobile App Development
                 </Link>
               </li>
               <li>
-                <Link href="/services#ui-ux" className="text-neutral-400 hover:text-white transition duration-300">
+                <Link href="/services#ui-ux" className="text-muted-foreground hover:text-primary transition duration-300">
                   UI/UX Design
                 </Link>
               </li>
               <li>
-                <Link href="/services#digital-marketing" className="text-neutral-400 hover:text-white transition duration-300">
+                <Link href="/services#digital-marketing" className="text-muted-foreground hover:text-primary transition duration-300">
                   Digital Marketing
                 </Link>
               </li>
               <li>
-                <Link href="/services#seo" className="text-neutral-400 hover:text-white transition duration-300">
+                <Link href="/services#seo" className="text-muted-foreground hover:text-primary transition duration-300">
                   SEO Services
                 </Link>
               </li>
@@ -134,32 +134,32 @@ const Footer = () => {
             <h3 className="font-heading font-semibold text-lg mb-6">Quick Links</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/" className="text-neutral-400 hover:text-white transition duration-300">
+                <Link href="/" className="text-muted-foreground hover:text-primary transition duration-300">
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-neutral-400 hover:text-white transition duration-300">
+                <Link href="/about" className="text-muted-foreground hover:text-primary transition duration-300">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/services" className="text-neutral-400 hover:text-white transition duration-300">
+                <Link href="/services" className="text-muted-foreground hover:text-primary transition duration-300">
                   Services
                 </Link>
               </li>
               <li>
-                <Link href="/blog" className="text-neutral-400 hover:text-white transition duration-300">
+                <Link href="/blog" className="text-muted-foreground hover:text-primary transition duration-300">
                   Blog
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-neutral-400 hover:text-white transition duration-300">
+                <Link href="/contact" className="text-muted-foreground hover:text-primary transition duration-300">
                   Contact
                 </Link>
               </li>
               <li>
-                <Link href="/privacy-policy" className="text-neutral-400 hover:text-white transition duration-300">
+                <Link href="/privacy-policy" className="text-muted-foreground hover:text-primary transition duration-300">
                   Privacy Policy
                 </Link>
               </li>
@@ -168,7 +168,7 @@ const Footer = () => {
           
           <div>
             <h3 className="font-heading font-semibold text-lg mb-6">Newsletter</h3>
-            <p className="text-neutral-400 mb-4">
+            <p className="text-muted-foreground mb-4">
               Subscribe to our newsletter to receive updates and news.
             </p>
             <form className="mb-6" onSubmit={handleNewsletterSubmit}>
@@ -178,18 +178,18 @@ const Footer = () => {
                   placeholder="Your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="rounded-r-none text-neutral-800 focus:outline-none"
+                  className="rounded-r-none focus:outline-none"
                 />
                 <Button 
                   type="submit" 
-                  className="bg-primary hover:bg-primary/90 rounded-l-none px-4"
+                  className="bg-accent hover:bg-accent/90 rounded-l-none px-4"
                   disabled={isLoading}
                 >
                   <i className="fas fa-paper-plane"></i>
                 </Button>
               </div>
             </form>
-            <p className="text-neutral-400 text-sm">
+            <p className="text-muted-foreground text-sm">
               © {new Date().getFullYear()} Freelantix. All rights reserved.
             </p>
           </div>
