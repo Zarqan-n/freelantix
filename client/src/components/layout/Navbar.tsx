@@ -19,7 +19,7 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  
+
   // Handle clicks outside the mobile menu
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -27,7 +27,7 @@ const Navbar = () => {
         setIsOpen(false);
       }
     };
-    
+
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -80,7 +80,7 @@ const Navbar = () => {
               <span className="text-primary font-heading font-bold text-2xl">Freelantix</span>
             </Link>
           </div>
-          
+
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
@@ -96,12 +96,12 @@ const Navbar = () => {
               </Link>
             ))}
             <div className="flex items-center gap-4">
-              <Button asChild className="btn btn-primary">
+              <Button asChild className="btn btn-primary text-white">
                 <Link href="/contact">Get Started</Link>
               </Button>
             </div>
           </div>
-          
+
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center gap-2">
             <Button 
@@ -115,7 +115,7 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-      
+
       {/* Mobile Navigation Overlay */}
       <div 
         className={cn(
@@ -157,11 +157,11 @@ const Navbar = () => {
                 </div>
               ))}
             </div>
-            
+
             <div className="mt-8">
               <Button 
                 asChild 
-                className="w-full btn btn-primary"
+                className="w-full btn btn-primary text-white"
                 size="lg"
               >
                 <Link href="/contact">Get Started</Link>
