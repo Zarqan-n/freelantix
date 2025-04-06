@@ -23,7 +23,7 @@ const HeroSection = () => {
             <div 
               className="flex flex-col sm:flex-row gap-4"
             >
-              <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
+              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white">
                 <Link href="/services">
                   Explore Services
                 </Link>
