@@ -70,7 +70,7 @@ const Navbar = () => {
   return (
     <header className={cn(
       "fixed w-full z-50 transition-all duration-300",
-      "bg-background border-b border-border",
+      "bg-red-300 border-b border-border",
       isScrolled ? "shadow-md py-2" : "py-4"
     )}>
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -107,7 +107,7 @@ const Navbar = () => {
             <Button 
               variant="ghost" 
               onClick={toggleMenu} 
-              className="text-foreground hover:text-primary"
+              className="text-white hover:text-white"
               aria-label="Toggle Menu"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -164,7 +164,7 @@ const Navbar = () => {
                 className="w-full btn btn-primary text-white"
                 size="lg"
               >
-                <Link href="/contact">Get Started</Link>
+                <Link href="/contact"><span className="text-white">Get Started</span></Link>
               </Button>
             </div>
           </div>

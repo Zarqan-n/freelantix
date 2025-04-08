@@ -66,12 +66,12 @@ const Contact = () => {
     {
       icon: "fas fa-map-marker-alt",
       title: "Location",
-      content: "123 Innovation Drive, Tech City, CA 94043"
+      content: "APC Road Rajabazar"
     },
     {
       icon: "fas fa-envelope",
       title: "Email",
-      content: "info@freelantix.com"
+      content: "Freelantix0@gmail.com"
     },
     {
       icon: "fas fa-phone-alt",

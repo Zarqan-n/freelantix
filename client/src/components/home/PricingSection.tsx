@@ -46,7 +46,7 @@ const plans: PricingPlan[] = [
       { text: 'E-commerce functionality', included: false },
     ],
     cta: 'Choose Standard',
-    popular: true,
+    popular: false,
   },
   {
     name: 'Premium Plan',
@@ -120,7 +120,7 @@ const PricingSection = () => {
                 <Button
                   asChild
                   className={`w-full ${
-                    plan.popular ? 'bg-primary hover:bg-primary/90' : 'bg-neutral-800 hover:bg-neutral-700'
+                    plan.popular ? 'bg-primary border border-red-500 hover:bg-white' : 'bg-white border border-red-500 hover:bg-primary'
                   }`}
                   size="lg"
                 >
@@ -137,7 +137,7 @@ const PricingSection = () => {
           <p className="text-neutral-500 mb-4">
             Need a custom solution? We can create a tailor-made package just for you.
           </p>
-          <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary/5">
+          <Button asChild className="border border-red-800">
             <Link href="/contact">
               Get a Custom Quote
             </Link>

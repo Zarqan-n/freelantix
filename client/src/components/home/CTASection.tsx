@@ -13,12 +13,12 @@ const CTASection = () => {
             Let's discuss how we can help you achieve your business goals with our comprehensive digital solutions.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-white text-primary hover:bg-neutral-100">
+            <Button asChild size="lg" className="bg-white border  text-primary hover:bg-transparent hover:border-white">
               <Link href="/contact">
                 Get in Touch
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-white text-blue-400 hover:bg-transparent">
+            <Button asChild size="lg" className="border border-white text-blue-400 hover:border-white">
               <Link href="/services">
                 Explore Services
               </Link>

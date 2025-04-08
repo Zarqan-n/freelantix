@@ -19,7 +19,7 @@
     --secondary-foreground: 25 30% 20%;
     --muted: 30 10% 90%;
     --muted-foreground: 30 10% 40%;
-    --accent: 160 50% 40%;
+    --accent: 350 80% 45%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
@@ -48,7 +48,7 @@
 
   /* Link styling */
   a:not(.unstyled) {
-    @apply text-primary hover:text-primary/80 transition-colors duration-300;
+    @apply text-primary hover:text-white transition-colors duration-300;
   }
 
   /* Button styling */

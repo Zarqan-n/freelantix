@@ -6,32 +6,34 @@ const About = () => {
   const teamMembers = [
     {
       id: 1,
-      name: "Alex Johnson",
-      position: "Founder & CEO",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=800&q=80",
-      bio: "Alex has over 15 years of experience in web development and digital marketing. He founded Freelantix with a vision to help businesses leverage technology for growth."
+      name: "Zarqan",
+      position: "Technical Lead",
+      image: "https://images.unsplash.com/photo-1581382575275-97901c2635b7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bWFufGVufDB8fDB8fHwy",
+      bio: "Zarqan is a full-stack developer with expertise in multiple programming languages. He oversees our development team and ensures technical excellence."
     },
     {
       id: 2,
-      name: "Sarah Williams",
+      name: "MD Furqan",
       position: "Creative Director",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=800&q=80",
-      bio: "Sarah leads our creative team with her exceptional design skills and strategic thinking. She ensures every project meets the highest design standards."
+      image: "https://images.unsplash.com/photo-1615109398623-88346a601842?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bWFufGVufDB8fDB8fHwy",
+      bio: "Furqan leads our creative team with her exceptional design skills and strategic thinking. She ensures every project meets the highest design standards."
     },
     {
       id: 3,
-      name: "David Chen",
-      position: "Technical Lead",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=800&q=80",
-      bio: "David is a full-stack developer with expertise in multiple programming languages. He oversees our development team and ensures technical excellence."
-    },
-    {
-      id: 4,
-      name: "Emily Rodriguez",
-      position: "Marketing Specialist",
-      image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=800&q=80",
-      bio: "Emily specializes in digital marketing strategies that drive results. She helps our clients increase their online visibility and reach their target audience."
+      name: "Zeeshan Ahmed",
+      position: "Founder & CEO",
+      image: "https://images.unsplash.com/photo-1480429370139-e0132c086e2a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bWFufGVufDB8fDB8fHwy",
+      bio: "Zeeshan has over 15 years of experience in web development and digital marketing. He founded Freelantix with a vision to help businesses leverage technology for growth."
     }
+    //https://unsplash.com/photos/man-in-black-hoodie-wearing-black-framed-eyeglasses-3JmfENcL24M
+    // ,
+    // {
+    //   id: 4,
+    //   name: "Emily Rodriguez",
+    //   position: "Marketing Specialist",
+    //   image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=800&q=80",
+    //   bio: "Emily specializes in digital marketing strategies that drive results. She helps our clients increase their online visibility and reach their target audience."
+    // }
   ];
 
   return (
@@ -75,10 +77,10 @@ const About = () => {
               </p>
             </div>
             <div className="relative">
-              <img 
-                src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80" 
-                alt="Freelantix journey" 
-                className="w-full h-auto rounded-2xl shadow-xl" 
+              <img
+                src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80"
+                alt="Freelantix journey"
+                className="w-full h-auto rounded-2xl shadow-xl"
               />
               <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg hidden md:block">
                 <div className="flex items-center space-x-3">
@@ -107,7 +109,7 @@ const About = () => {
               Our core values guide everything we do and shape our approach to helping clients succeed.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-white rounded-xl p-8 shadow-md">
               <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-6">
@@ -118,7 +120,7 @@ const About = () => {
                 We put our clients' needs first and work closely with them to understand their goals and deliver solutions that exceed expectations.
               </p>
             </div>
-            
+
             <div className="bg-white rounded-xl p-8 shadow-md">
               <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <i className="fas fa-lightbulb text-2xl"></i>
@@ -128,7 +130,7 @@ const About = () => {
                 We embrace new technologies and creative approaches to solve problems and deliver cutting-edge solutions.
               </p>
             </div>
-            
+
             <div className="bg-white rounded-xl p-8 shadow-md">
               <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <i className="fas fa-check-circle text-2xl"></i>
@@ -138,7 +140,7 @@ const About = () => {
                 We're committed to delivering high-quality work that meets the highest standards of performance, design, and user experience.
               </p>
             </div>
-            
+
             <div className="bg-white rounded-xl p-8 shadow-md">
               <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <i className="fas fa-handshake text-2xl"></i>
@@ -148,7 +150,7 @@ const About = () => {
                 We operate with honesty, transparency, and ethical business practices in all our interactions.
               </p>
             </div>
-            
+
             <div className="bg-white rounded-xl p-8 shadow-md">
               <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <i className="fas fa-brain text-2xl"></i>
@@ -158,7 +160,7 @@ const About = () => {
                 We are constantly learning and improving our skills to stay at the forefront of our industry.
               </p>
             </div>
-            
+
             <div className="bg-white rounded-xl p-8 shadow-md">
               <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <i className="fas fa-chart-line text-2xl"></i>
@@ -184,14 +186,14 @@ const About = () => {
               Our talented team brings together a diverse range of skills and expertise to deliver exceptional digital solutions.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {teamMembers.map((member) => (
               <div key={member.id} className="bg-white rounded-xl shadow-md overflow-hidden hover-lift transition-transform">
-                <img 
-                  src={member.image} 
-                  alt={member.name} 
-                  className="w-full h-64 object-cover" 
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  className="w-full h-64 object-cover"
                 />
                 <div className="p-6">
                   <h3 className="font-heading font-semibold text-xl mb-1 text-neutral-800">{member.name}</h3>
@@ -214,7 +216,7 @@ const About = () => {
             <p className="text-neutral-600 text-lg mb-8">
               Let's discuss how our team can help you achieve your business goals with our comprehensive digital solutions.
             </p>
-            <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
+            <Button asChild size="lg" className="bg-primary/10 hover:bg-primary/90">
               <Link href="/contact">
                 Get in Touch
               </Link>
