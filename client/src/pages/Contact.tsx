@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { ContactFormData } from '@/lib/types';
 import { Button } from '@/components/ui/button';
+import GoogleMap from "@/components/home/GoogleMap";
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -15,7 +16,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import GoogleMap from '@/components/ui/google-map';
 import { apiRequest } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
 
@@ -29,7 +29,7 @@ const formSchema = z.object({
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
-  
+
   const form = useForm<ContactFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,12 +44,12 @@ const Contact = () => {
     try {
       setIsSubmitting(true);
       await apiRequest('POST', '/api/contact', data);
-      
+
       toast({
         title: "Message Sent!",
         description: "Thank you for reaching out. We'll get back to you soon.",
       });
-      
+
       form.reset();
     } catch (error) {
       toast({
@@ -132,9 +132,9 @@ const Contact = () => {
                         <FormItem>
                           <FormLabel className="text-neutral-700 font-medium">Name</FormLabel>
                           <FormControl>
-                            <Input 
-                              placeholder="Your name" 
-                              {...field} 
+                            <Input
+                              placeholder="Your name"
+                              {...field}
                               className="px-4 py-3 rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                             />
                           </FormControl>
@@ -149,9 +149,9 @@ const Contact = () => {
                         <FormItem>
                           <FormLabel className="text-neutral-700 font-medium">Email</FormLabel>
                           <FormControl>
-                            <Input 
-                              placeholder="your@email.com" 
-                              {...field} 
+                            <Input
+                              placeholder="your@email.com"
+                              {...field}
                               className="px-4 py-3 rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                             />
                           </FormControl>
@@ -160,7 +160,7 @@ const Contact = () => {
                       )}
                     />
                   </div>
-                  
+
                   <FormField
                     control={form.control}
                     name="subject"
@@ -168,9 +168,9 @@ const Contact = () => {
                       <FormItem>
                         <FormLabel className="text-neutral-700 font-medium">Subject</FormLabel>
                         <FormControl>
-                          <Input 
-                            placeholder="Project inquiry" 
-                            {...field} 
+                          <Input
+                            placeholder="Project inquiry"
+                            {...field}
                             className="px-4 py-3 rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                           />
                         </FormControl>
@@ -178,7 +178,7 @@ const Contact = () => {
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="message"
@@ -186,10 +186,10 @@ const Contact = () => {
                       <FormItem>
                         <FormLabel className="text-neutral-700 font-medium">Message</FormLabel>
                         <FormControl>
-                          <Textarea 
-                            placeholder="Tell us about your project" 
+                          <Textarea
+                            placeholder="Tell us about your project"
                             rows={5}
-                            {...field} 
+                            {...field}
                             className="px-4 py-3 rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                           />
                         </FormControl>
@@ -197,9 +197,9 @@ const Contact = () => {
                       </FormItem>
                     )}
                   />
-                  
-                  <Button 
-                    type="submit" 
+
+                  <Button
+                    type="submit"
                     className="w-full bg-primary hover:bg-primary/90 font-medium py-3"
                     disabled={isSubmitting}
                   >
@@ -208,14 +208,14 @@ const Contact = () => {
                 </form>
               </Form>
             </div>
-            
+
             {/* Contact Information */}
             <div>
               <div className="bg-white rounded-xl shadow-md p-8 mb-8">
                 <h3 className="font-heading font-semibold text-xl mb-6 text-neutral-800">
                   Contact Information
                 </h3>
-                
+
                 <div className="space-y-4">
                   {contactInfo.map((info, index) => (
                     <div key={index} className="flex items-start">
@@ -235,15 +235,15 @@ const Contact = () => {
                     </div>
                   ))}
                 </div>
-                
+
                 <div className="mt-8">
                   <h4 className="font-medium text-neutral-800 mb-3">Follow Us</h4>
                   <div className="flex space-x-4">
                     {socialLinks.map((link, index) => (
-                      <a 
+                      <a
                         key={index}
-                        href={link.url} 
-                        target="_blank" 
+                        href={link.url}
+                        target="_blank"
                         rel="noreferrer"
                         className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-600 hover:bg-primary hover:text-white transition duration-300"
                         aria-label={link.label}
@@ -254,13 +254,11 @@ const Contact = () => {
                   </div>
                 </div>
               </div>
-              
+
               {/* Google Maps */}
-              <div className="h-80">
-                <GoogleMap 
-                  address="123 Innovation Drive, Tech City, CA 94043" 
-                  height="320px"
-                />
+              <div>
+                <h2 className="text-2xl font-bold mb-4">Find Us Here</h2>
+                <GoogleMap />
               </div>
             </div>
           </div>
