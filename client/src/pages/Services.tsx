@@ -10,42 +10,42 @@ const Services = () => {
       title: "Web Development",
       description: "We build custom, responsive websites that engage visitors and drive conversions. Our web development services include:",
       icon: "fas fa-code",
-      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600&q=80"
+      image: "https://images.unsplash.com/photo-1593720213428-28a5b9e94613?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     },
     {
       id: 2,
       title: "E-Commerce Solutions",
       description: "Transform your business with our comprehensive e-commerce solutions designed to maximize sales and enhance user experience:",
       icon: "fas fa-shopping-cart",
-      image: "https://images.unsplash.com/photo-1557838923-2985c318be48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600&q=80"
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZSUyMGNvbW1lcmNlfGVufDB8fDB8fHwy"
     },
     {
       id: 3,
       title: "Mobile App Development",
       description: "We create intuitive, feature-rich mobile applications that provide exceptional user experiences across all devices:",
       icon: "fas fa-mobile-alt",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600&q=80"
+      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bW9iaWxlJTIwYXBwJTIwZGV2ZWxvcG1lbnR8ZW58MHx8MHx8fDI%3D"
     },
     {
       id: 4,
       title: "Digital Marketing",
       description: "Our data-driven digital marketing strategies help you reach your target audience and achieve measurable results:",
       icon: "fas fa-bullhorn",
-      image: "https://images.unsplash.com/photo-1533750349088-cd871a92f8bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600&q=80"
+      image: "https://images.unsplash.com/photo-1557838923-2985c318be48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600&q=80"
     },
     {
       id: 5,
       title: "UI/UX Design",
       description: "We create stunning, user-centered designs that enhance user engagement and drive business goals:",
       icon: "fas fa-paint-brush",
-      image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600&q=80"
+      image: "https://images.unsplash.com/photo-1587440871875-191322ee64b0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8dWklMjB1eCUyMGRlc2lnbnxlbnwwfHwwfHx8Mg%3D%3D"
     },
     {
       id: 6,
       title: "SEO & Content Strategy",
       description: "Improve your search engine rankings and drive organic traffic with our comprehensive SEO services:",
       icon: "fas fa-search",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600&q=80"
+      image: "https://images.unsplash.com/photo-1686061593213-98dad7c599b9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2VvJTIwb3B0aW1pc2F0aW9ufGVufDB8fDB8fHwy"
     }
   ];
 
@@ -150,7 +150,7 @@ const Services = () => {
                   ))}
                 </ul>
                 
-                <Button asChild className="bg-primary hover:bg-primary/90">
+                <Button asChild className="bg-white border border-red-800 hover:bg-primary/90">
                   <Link href="/contact">
                     Get Started
                   </Link>
@@ -180,12 +180,12 @@ const Services = () => {
               Let's discuss how we can help you achieve your business goals with our comprehensive digital solutions.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-white text-primary hover:bg-neutral-100">
+              <Button asChild size="lg" className="bg-white text-primary hover:bg-primary">
                 <Link href="/contact">
                   Get in Touch
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+              <Button asChild size="lg"  className="border-white text-white hover:bg-primary">
                 <Link href="/about">
                   Learn More About Us
                 </Link>

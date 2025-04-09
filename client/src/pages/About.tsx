@@ -1,7 +1,8 @@
 import { Helmet } from 'react-helmet';
 import { Button } from '@/components/ui/button';
 import { Link } from 'wouter';
-
+import Developby from '@/components/ui/developerName';
+import DeveloperName from '@/components/ui/developerName';
 const About = () => {
   const teamMembers = [
     {
@@ -16,7 +17,7 @@ const About = () => {
       name: "MD Furqan",
       position: "Creative Director",
       image: "https://images.unsplash.com/photo-1615109398623-88346a601842?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bWFufGVufDB8fDB8fHwy",
-      bio: "Furqan leads our creative team with her exceptional design skills and strategic thinking. She ensures every project meets the highest design standards."
+      bio: "Furqan leads our creative team with him exceptional design skills and strategic thinking. He ensures every project meets the highest design standards."
     },
     {
       id: 3,
@@ -26,18 +27,19 @@ const About = () => {
       bio: "Zeeshan has over 15 years of experience in web development and digital marketing. He founded Freelantix with a vision to help businesses leverage technology for growth."
     }
     //https://unsplash.com/photos/man-in-black-hoodie-wearing-black-framed-eyeglasses-3JmfENcL24M
-    // ,
-    // {
-    //   id: 4,
-    //   name: "Emily Rodriguez",
-    //   position: "Marketing Specialist",
-    //   image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=800&q=80",
-    //   bio: "Emily specializes in digital marketing strategies that drive results. She helps our clients increase their online visibility and reach their target audience."
-    // }
+    ,
+    {
+      id: 4,
+      name: "Emily Rodriguez",
+      position: "Marketing Specialist",
+      image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=800&q=80",
+      bio: "Emily specializes in digital marketing strategies that drive results. She helps our clients increase their online visibility and reach their target audience."
+    }
   ];
 
   return (
     <>
+
       <Helmet>
         <title>About Us | Freelantix</title>
         <meta name="description" content="Learn about Freelantix, our mission, values, and the dedicated team behind our digital solutions." />
@@ -207,7 +209,7 @@ const About = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 lg:py-24 bg-primary/5">
+      <section className="py-6 pb-3 lg:py-24 bg-primary/5">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="font-heading font-bold text-3xl lg:text-4xl text-neutral-800 mb-6">
@@ -221,9 +223,11 @@ const About = () => {
                 Get in Touch
               </Link>
             </Button>
+
           </div>
         </div>
-      </section>
+        <DeveloperName></DeveloperName>
+    </section >
     </>
   );
 };
