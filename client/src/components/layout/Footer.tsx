@@ -44,11 +44,12 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-red-300 text-foreground py-16">
+    <footer className="bg-green-200 text-foreground py-16">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           <div>
-            <Link href="/" className="inline-block mb-6">
+          <Link href="/" className="flex items-center space-x-2 mb-5">
+              <img src="/assets/logo.png" alt="logo" className="h-7 w-7" />
               <span className="text-primary font-heading font-bold text-2xl">Freelantix</span>
             </Link>
             <p className="text-muted-foreground mb-6">

@@ -120,7 +120,7 @@ const PricingSection = () => {
                 <Button
                   asChild
                   className={`w-full ${
-                    plan.popular ? 'bg-primary border border-red-500 hover:bg-white' : 'bg-white border border-red-500 hover:bg-primary'
+                    plan.popular ? 'bg-primary border border-green-500 hover:bg-white' : 'bg-white border border-green-500 hover:bg-primary'
                   }`}
                   size="lg"
                 >
@@ -137,7 +137,7 @@ const PricingSection = () => {
           <p className="text-neutral-500 mb-4">
             Need a custom solution? We can create a tailor-made package just for you.
           </p>
-          <Button asChild className="border border-red-800">
+          <Button asChild className="border border-green-600">
             <Link href="/contact">
               Get a Custom Quote
             </Link>

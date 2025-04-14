@@ -111,7 +111,7 @@ const AboutSection = () => {
             </div>
             
             <div>
-              <Button asChild className="bg-white border border-red-800 hover:bg-accent/90 inline-flex items-center">
+              <Button asChild className="bg-white border border-green-600 hover:bg-accent/90 inline-flex items-center">
                 <Link href="/about">
                   Meet Our Team <i className="fas fa-arrow-right ml-2"></i>
                 </Link>

@@ -150,7 +150,7 @@ const Services = () => {
                   ))}
                 </ul>
                 
-                <Button asChild className="bg-white border border-red-800 hover:bg-primary/90">
+                <Button asChild className="bg-white border border-green-600 hover:bg-primary/90">
                   <Link href="/contact">
                     Get Started
                   </Link>

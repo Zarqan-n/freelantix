@@ -3,6 +3,7 @@ import { Link, useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Menu, X, ChevronRight } from 'lucide-react';
+import logo from 'client/public/assets/logo.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -70,22 +71,25 @@ const Navbar = () => {
   return (
     <header className={cn(
       "fixed w-full z-50 transition-all duration-300",
-      "bg-red-300 border-b border-border",
+      "bg-green-200 border-b border-border",
       isScrolled ? "shadow-md py-2" : "py-4"
     )}>
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <Link href="/" className="flex items-center">
+            <Link href="/" className="flex items-center space-x-2">
+              <img src="/assets/logo.png" alt="logo" className="h-7 w-7" />
               <span className="text-primary font-heading font-bold text-2xl">Freelantix</span>
             </Link>
+
+
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <Link 
-                key={item.path} 
+              <Link
+                key={item.path}
                 href={item.path}
                 className={cn(
                   "nav-link text-foreground hover:text-primary font-medium transition-colors",
@@ -104,10 +108,10 @@ const Navbar = () => {
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center gap-2">
-            <Button 
-              variant="ghost" 
-              onClick={toggleMenu} 
-              className="text-white hover:text-white"
+            <Button
+              variant="ghost"
+              onClick={toggleMenu}
+              className="text-green-600 hover:text-green-800"
               aria-label="Toggle Menu"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -117,28 +121,37 @@ const Navbar = () => {
       </nav>
 
       {/* Mobile Navigation Overlay */}
-      <div 
+      <div
         className={cn(
-          "fixed inset-0 bg-background/80 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300",
+          "fixed inset-0 bg-background/60 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300",
           isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         )}
       >
         {/* Mobile Menu Content */}
-        <div 
+        <div
           ref={mobileMenuRef}
           className={cn(
-            "fixed top-[73px] right-0 bottom-0 w-3/4 max-w-sm bg-background border-l border-border shadow-xl z-50 overflow-y-auto transition-transform duration-300 ease-in-out",
+            "fixed top-0 right-0 bottom-0 w-3/4 max-w-sm bg-green-200 p-3 pt-6 border-l border-border shadow-xl z-50 overflow-y-auto transition-transform duration-300 ease-in-out",
             isOpen ? "translate-x-0" : "translate-x-full"
           )}
         >
-          <div className="p-6 flex flex-col h-full">
+          <div className="flex items-center">
+            <Link href="/" className="flex items-center space-x-2">
+              <img src="/assets/logo.png" alt="logo" className="h-7 w-7" />
+              <span className="text-primary font-heading font-bold text-2xl">Freelantix</span>
+            </Link>
+
+
+          </div>
+          <div className="p-6 flex flex-col">
+            
             <div className="space-y-6 flex-1">
               {navItems.map((item) => (
-                <div 
+                <div
                   key={item.path}
                   className="border-b border-border pb-3"
                 >
-                  <Link 
+                  <Link
                     href={item.path}
                     className={cn(
                       "group flex items-center justify-between py-2 text-lg font-medium transition-colors",
@@ -146,12 +159,12 @@ const Navbar = () => {
                     )}
                   >
                     <span>{item.label}</span>
-                    <ChevronRight 
-                      size={18} 
+                    <ChevronRight
+                      size={18}
                       className={cn(
                         "transition-transform duration-300",
                         "group-hover:translate-x-1 text-primary opacity-0 group-hover:opacity-100"
-                      )} 
+                      )}
                     />
                   </Link>
                 </div>
@@ -159,12 +172,12 @@ const Navbar = () => {
             </div>
 
             <div className="mt-8">
-              <Button 
-                asChild 
-                className="w-full btn btn-primary text-white"
+              <Button
+                asChild
+                className="w-full btn btn-primary text-white border"
                 size="lg"
               >
-                <Link href="/contact"><span className="text-white">Get Started</span></Link>
+                <Link href="/contact"><span className="text-green">Get Started</span></Link>
               </Button>
             </div>
           </div>

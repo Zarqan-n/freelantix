@@ -58,7 +58,7 @@ export default function DeveloperName() {
             custom={i}
             initial={{ opacity: 0, rotateX: 0 }}
             animate={controls}
-            className="text-[#CF1736] drop-shadow-lg"
+            className="text-[#5CB338] drop-shadow-lg"
           >
             {char}
           </motion.span>

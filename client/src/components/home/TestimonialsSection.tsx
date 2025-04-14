@@ -119,7 +119,7 @@ const TestimonialsSection = () => {
                       <p className="text-muted-foreground text-sm">{testimonial.position}, {testimonial.company}</p>
                     </div>
                   </div>
-                  <div className="mb-4 flex text-amber-400">
+                  <div className="mb-4 flex text-amber-600">
                     {Array.from({ length: Math.floor(testimonial.rating) }).map((_, i) => (
                       <Star key={i} size={18} fill="currentColor" />
                     ))}
