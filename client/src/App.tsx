@@ -9,6 +9,7 @@ import BackToTop from "@/components/ui/back-to-top";
 import Home from "@/pages/Home";
 import About from "@/pages/About";
 import Services from "@/pages/Services";
+import Projects from "@/pages/Projects";
 import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import Contact from "@/pages/Contact";
@@ -25,6 +26,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/about" component={About} />
       <Route path="/services" component={Services} />
+      <Route path="/projects" component={Projects} />
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:id" component={BlogPost} />
       <Route path="/contact" component={Contact} />
