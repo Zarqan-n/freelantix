@@ -27,7 +27,7 @@ const HeroSection = () => {
               <Link href="/projects">
                   View Projects
                 </Link>
-              </Button>
+              </Button> 
               <Button asChild size="lg" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
                 <Link href="/contact">
                   Contact Us

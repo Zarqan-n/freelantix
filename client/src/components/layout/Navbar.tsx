@@ -55,7 +55,7 @@ const Navbar = () => {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-
+ 
   const navItems = [
     { label: 'Home', path: '/' },
     { label: 'Services', path: '/services' },

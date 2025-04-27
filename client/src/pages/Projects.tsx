@@ -24,7 +24,7 @@ const projects: Project[] = [
   },
   {
     id: 2,
-    title: "Portfolio",
+    title: "Portfolio", 
     description: "A modern portfolio website with animations and responsive design",
     image: "/assets/ZarqanPortfolio.png",
     category: "UI/UX Design",
