@@ -9,8 +9,16 @@ import { queryClient } from "./lib/queryClient";
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
   body {
     font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -23,6 +31,10 @@ const GlobalStyles = createGlobalStyle`
   
   .hover-lift:hover {
     transform: translateY(-5px);
+  }
+
+  * {
+    box-sizing: border-box;
   }
 `;
 
